@@ -89,14 +89,38 @@ export const findLastIndex = <T>(
   return i;
 };
 
-export const flatten = (arr: any[]) => arr.reduce((pv: any[], cv: any) => pv.concat(cv), [])
-
-export const flattenDeep = (arr: any[]) => {
+export const flattenDepth = (arr: any[], level = 1, currLevel = 1) => {
   const clone = arr.slice();
+  if (level === 0) {
+    return clone;
+  }
   let output: any = [];
-  while(clone.length){
-    let elem = clone.shift()
-    output = output.concat(Array.isArray(elem) ? flattenDeep(elem): elem)
+  while (clone.length) {
+    let elem = clone.shift();
+    output = output.concat(
+      Array.isArray(elem) && currLevel < level
+        ? flattenDepth(elem, level, currLevel + 1)
+        : elem
+    );
   }
   return output;
-}
+};
+
+export const flatten = (arr: any[]) => flattenDepth(arr, 1);
+
+export const flattenDeep = (arr: any[]) =>
+  flattenDepth(arr, Number.MAX_SAFE_INTEGER);
+
+export const fromPairs = <K extends string | number | symbol, T>(
+  arr: Array<any[]>
+): Record<K, T> => {
+  const record: Record<K, T> = {} as Record<K, T>;
+  for (const tuple of arr) {
+    if (["string", "number", "symbol"].includes(typeof tuple[0])) {
+      record[tuple[0] as K] = tuple[1];
+    } else {
+      throw new TypeError(`Element ${tuple} does not have a valid key`);
+    }
+  }
+  return record;
+};

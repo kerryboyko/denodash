@@ -6,8 +6,10 @@ import {
   dropWhile,
   dropWhileRight,
   findLastIndex,
-  flatten, 
+  flatten,
   flattenDeep,
+  flattenDepth,
+  fromPairs,
 } from "./array.ts";
 
 Rhum.testPlan("array.ts", () => {
@@ -121,21 +123,35 @@ Rhum.testPlan("array.ts", () => {
   });
   Rhum.testSuite("flatten()", () => {
     Rhum.testCase("should flatten an index one level", () => {
-      const testArr = [1, [2, [3, [4]], 5]]
-      Rhum.asserts.assertEquals(
-        flatten(testArr),
-        [1, 2, [3, [4]], 5]
-      );
+      const testArr = [1, [2, [3, [4]], 5]];
+      Rhum.asserts.assertEquals(flatten(testArr), [1, 2, [3, [4]], 5]);
     });
   });
   Rhum.testSuite("flattenDeep()", () => {
     Rhum.testCase("should flatten an index completely", () => {
-      const testArr = [1, [2, [3, [4]], 5]]
-      Rhum.asserts.assertEquals(
-        flattenDeep(testArr),
-        [1, 2, 3, 4, 5]
-      );
+      const testArr = [1, [2, [3, [4]], 5]];
+      Rhum.asserts.assertEquals(flattenDeep(testArr), [1, 2, 3, 4, 5]);
     });
+  });
+  Rhum.testSuite("flattenDepth()", () => {
+    Rhum.testCase("should flatten an index n levels", () => {
+      const testArr = [1, [2, [3, [4]], 5]];
+      Rhum.asserts.assertEquals(flattenDepth(testArr, 1), [1, 2, [3, [4]], 5]);
+      Rhum.asserts.assertEquals(flattenDepth(testArr, 2), [1, 2, 3, [4], 5]);
+      Rhum.asserts.assertEquals(flattenDepth(testArr, 5), [1, 2, 3, 4, 5]);
+    });
+  });
+  Rhum.testSuite("fromPairs()", () => {
+    Rhum.testCase(
+      "should create an object from an array of key value tuples",
+      () => {
+        const testArr = [
+          ["a", 1],
+          ["b", 2],
+        ];
+        Rhum.asserts.assertEquals(fromPairs(testArr), { a: 1, b: 2 });
+      }
+    );
   });
 });
 
