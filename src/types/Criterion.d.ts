@@ -1,0 +1,1 @@
+export type Criterion<T> = (x: T) => boolean;

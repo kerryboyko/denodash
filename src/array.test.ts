@@ -1,16 +1,16 @@
 import { Rhum } from "../testing_deps.ts";
-import {
-  chunk,
-  difference,
-  differenceWith,
-  dropWhile,
-  dropWhileRight,
-  findLastIndex,
-  flatten,
-  flattenDeep,
-  flattenDepth,
-  fromPairs,
-} from "./array.ts";
+
+import chunk from "./array/chunk.ts";
+import difference from "./array/difference.ts";
+import differenceWith from "./array/differenceWith.ts";
+import dropWhile from "./array/dropWhile.ts";
+import dropWhileRight from "./array/dropWhileRight.ts";
+import findLastIndex from "./array/findLastIndex.ts";
+import flatten from "./array/flatten.ts";
+import flattenDeep from "./array/flattenDeep.ts";
+import flattenDepth from "./array/flattenDepth.ts";
+import fromPairs from "./array/fromPairs.ts";
+import intersection from "./array/intersection.ts";
 
 Rhum.testPlan("array.ts", () => {
   Rhum.testSuite("chunk()", () => {
@@ -152,6 +152,43 @@ Rhum.testPlan("array.ts", () => {
         Rhum.asserts.assertEquals(fromPairs(testArr), { a: 1, b: 2 });
       }
     );
+  });
+  Rhum.testSuite("intersection()", () => {
+    Rhum.testCase(
+      "Creates an array of unique values that are included in all given arrays",
+      () => {
+        const testArrs = [
+          [2, 1],
+          [2, 3],
+        ];
+        Rhum.asserts.assertEquals(intersection(...testArrs), [2]);
+      }
+    );
+    // Rhum.testCase(
+    //   "Creates an array of unique values that are included in all given arrays given an iteratee",
+    //   () => {
+    //     Rhum.asserts.assertEquals(
+    //       intersectionBy([2.1, 1.2], [2.3, 3.4], Math.floor),
+    //       [2.1]
+    //     );
+    //   }
+    // );
+    // Rhum.testCase(
+    //   "Creates an array of unique values when referencing by object property",
+    //   () => {
+    //     Rhum.asserts.assertEquals(
+    //       intersectionBy(
+    //         [{ x: 1, y: 2 }],
+    //         [
+    //           { x: 2, q: 4 },
+    //           { x: 1, z: 4 },
+    //         ],
+    //         "x"
+    //       ),
+    //       [{ x: 1, y: 2 }]
+    //     );
+    //   }
+    // );
   });
 });
 
