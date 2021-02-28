@@ -1,6 +1,8 @@
+import { Predicate } from "../types/Predicate";
+
 export const findLastIndex = <T>(
   arr: T[],
-  predicate: (x: T) => boolean
+  predicate: Predicate<T>
 ): number => {
   const l = arr.length;
   let i = l - 1;

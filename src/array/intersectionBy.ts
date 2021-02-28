@@ -1,4 +1,4 @@
-import type {Iteratee} from '../types/Iteratee.d.ts';
+import type { Iteratee } from "../types/Iteratee.d.ts";
 
 const intersectionByNormalized = <T>(arrays: T[][], fn: Iteratee<T>): T[] => {
   const baseArray = arrays[0];
@@ -22,9 +22,10 @@ export const intersectionBy = <T>(...args: Array<T[] | Iteratee<T>>) => {
   while (Array.isArray(args[cursor])) {
     cursor += 1;
   }
-  const fn: Iteratee<T> = (typeof args[cursor + 1] === "function"
-    ? args[cursor + 1] as Iteratee<T>
-    : (x: T): T => x);
+  const fn: Iteratee<T> =
+    typeof args[cursor + 1] === "function"
+      ? (args[cursor + 1] as Iteratee<T>)
+      : (x: T): T => x;
 
   return intersectionByNormalized<T>(
     (args.slice(0, cursor) as unknown) as T[][],

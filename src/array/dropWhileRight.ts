@@ -1,6 +1,8 @@
+import { Predicate } from "../types/Predicate";
+
 export const dropWhileRight = <T>(
   arr: T[],
-  predicate: (x: T) => boolean
+  predicate: Predicate<T>
 ): T[] => {
   const l = arr.length;
   let i = l - 1;
