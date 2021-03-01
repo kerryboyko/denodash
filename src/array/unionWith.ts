@@ -1,7 +1,7 @@
 import type { Comparator } from "../types/Comparator.d.ts";
 
 const unionWith = <T>(comparator: Comparator<T>, ...arrays: T[][]): T[] => {
-  const matchingArrays = [].concat(...arrays);
+  const matchingArrays = ([] as T[]).concat(...arrays);
   const matches: T[] = [];
   for (const elem of matchingArrays) {
     if (!matches.some((previousMatch) => comparator(elem, previousMatch))) {

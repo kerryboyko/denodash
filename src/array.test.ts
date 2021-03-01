@@ -1,5 +1,10 @@
 import { Rhum } from "../testing_deps.ts";
 
+import bifurcate from "./array/bifurcate.ts";
+import bifurcateBy from "./array/bifurcateBy.ts";
+import cartesianProduct from "./array/cartesianProduct.ts";
+import chunkIntoParts from "./array/chunkIntoParts.ts";
+
 import chunk from "./array/chunk.ts";
 import difference from "./array/difference.ts";
 import differenceWith from "./array/differenceWith.ts";
@@ -11,11 +16,61 @@ import flattenDeep from "./array/flattenDeep.ts";
 import flattenDepth from "./array/flattenDepth.ts";
 import fromPairs from "./array/fromPairs.ts";
 import intersection from "./array/intersection.ts";
-import zip from './array/zip.ts';
-import unzip from './array/unzip.ts';
-import xor from './array/xor.ts';
 
-Rhum.testPlan("array.ts", () => {
+import intersectionBy from "./array/intersectionBy.ts";
+import intersectionWith from "./array/intersectionWith.ts";
+import lastIndexOf from "./array/lastIndexOf.ts";
+import shank from "./array/shank.ts";
+import union from "./array/union.ts";
+import unionBy from "./array/unionBy.ts";
+import unionWith from "./array/unionWith.ts";
+import uniq from "./array/uniq.ts";
+import uniqBy from "./array/uniqBy.ts";
+import uniqWith from "./array/uniqWith.ts";
+
+import unzip from "./array/unzip.ts";
+import xor from "./array/xor.ts";
+import zip from "./array/zip.ts";
+
+Rhum.testPlan("array/*", () => {
+  Rhum.testSuite("bifurcate()", () => {
+    Rhum.testCase(
+      "Should split values into two groups based on a given filter array",
+      () => {
+        Rhum.asserts.assertEquals(
+          bifurcate(["beep", "boop", "foo", "bar"], [true, true, false, true]),
+          [["beep", "boop", "bar"], ["foo"]]
+        );
+      }
+    );
+  });
+  Rhum.testSuite("bifurcateBy()", () => {
+    Rhum.testCase(
+      "Should split values into two groups based on a given filter function",
+      () => {
+        Rhum.asserts.assertEquals(
+          bifurcateBy(
+            ["beep", "boop", "foo", "bar"],
+            (x: string) => x.charAt(0) === "b"
+          ),
+          [["beep", "boop", "bar"], ["foo"]]
+        );
+      }
+    );
+  });
+  Rhum.testSuite("cartesianProduct()", () => {
+    Rhum.testCase(
+      "Should calculate the cartesian product of two arrays",
+      () => {
+        Rhum.asserts.assertEquals(cartesianProduct(["x", "y"], [1, 2]), [
+          ["x", 1],
+          ["x", 2],
+          ["y", 1],
+          ["y", 2],
+        ]);
+      }
+    );
+  });
   Rhum.testSuite("chunk()", () => {
     const array = [0, 1, 2, 3, 4, 5];
 
@@ -51,6 +106,99 @@ Rhum.testPlan("array.ts", () => {
       ]);
     });
   });
+  Rhum.testSuite("chunk()", () => {
+    const array = [0, 1, 2, 3, 4, 5];
+
+    Rhum.testCase("should return chunked arrays", () => {
+      const actual = chunk(array, 3);
+      Rhum.asserts.assertEquals(actual, [
+        [0, 1, 2],
+        [3, 4, 5],
+      ]);
+    });
+
+    Rhum.testCase("should return the last chunk as remaining elements", () => {
+      const actual = chunk(array, 4);
+      Rhum.asserts.assertEquals(actual, [
+        [0, 1, 2, 3],
+        [4, 5],
+      ]);
+    });
+
+    Rhum.testCase("should ensure the minimum `size` is `0`", () => {
+      const actual = chunk(array, -1);
+      Rhum.asserts.assertEquals(actual, []);
+    });
+
+    Rhum.testCase("should coerce `size` to an integer", () => {
+      Rhum.asserts.assertEquals(chunk(array, array.length / 4), [
+        [0],
+        [1],
+        [2],
+        [3],
+        [4],
+        [5],
+      ]);
+    });
+  });
+  Rhum.testSuite("chunkIntoParts()", () => {
+    Rhum.testCase("should chunk into n parts", () => {
+      const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 12), [
+        [1],
+        [2],
+        [3],
+        [4],
+        [5],
+        [6],
+        [7],
+        [8],
+        [9],
+        [10],
+        [11],
+        [12],
+      ]);
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 7), [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+        [7, 8],
+        [9, 10],
+        [11, 12],
+      ]);
+
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 6), [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+        [7, 8],
+        [9, 10],
+        [11, 12],
+      ]);
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 5), [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        [10, 11, 12],
+      ]);
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 4), [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        [10, 11, 12],
+      ]);
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 3), [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+      ]);
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 2), [
+        [1, 2, 3, 4, 5, 6],
+        [7, 8, 9, 10, 11, 12],
+      ]);
+      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 1), [testArray]);
+    });
+  });
   Rhum.testSuite("difference()/differenceBy()", () => {
     Rhum.testCase("should return the difference of two arrays", () => {
       const a = [0, 1, 2];
@@ -63,6 +211,7 @@ Rhum.testPlan("array.ts", () => {
       Rhum.asserts.assertEquals(difference(a, b, Math.floor), [1.7, 3.2]);
     });
   });
+
   Rhum.testSuite("differenceWith()", () => {
     Rhum.testCase(
       "should work with a comparator as the third parameter",
@@ -218,12 +367,7 @@ Rhum.testPlan("array.ts", () => {
   });
   Rhum.testSuite("xor()", () => {
     Rhum.testCase("should produce the symmetric difference", () => {
-      Rhum.asserts.assertEquals(
-        xor([2, 1], [2, 3]),
-        [
-          1, 3
-        ]
-      );
+      Rhum.asserts.assertEquals(xor([2, 1], [2, 3]), [1, 3]);
     });
   });
 });
