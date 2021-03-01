@@ -1,0 +1,16 @@
+import type { Iteratee } from "../types/Iteratee.d.ts";
+
+export const unionBy = <T>(fn: Iteratee<T>, ...arrays: T[][]): T[] => {
+  const matchingArrays = [].concat(...arrays);
+  const read = new Set<T>();
+  const matches: T[] = [];
+  for (const elem of matchingArrays) {
+    if (!read.has(fn(elem))) {
+      read.add(fn(elem));
+      matches.push(elem);
+    }
+  }
+  return matches;
+};
+
+export default unionBy;
