@@ -316,31 +316,51 @@ Rhum.testPlan("array/*", () => {
         Rhum.asserts.assertEquals(intersection(...testArrs), [2]);
       }
     );
-    // Rhum.testCase(
-    //   "Creates an array of unique values that are included in all given arrays given an iteratee",
-    //   () => {
-    //     Rhum.asserts.assertEquals(
-    //       intersectionBy([2.1, 1.2], [2.3, 3.4], Math.floor),
-    //       [2.1]
-    //     );
-    //   }
-    // );
-    // Rhum.testCase(
-    //   "Creates an array of unique values when referencing by object property",
-    //   () => {
-    //     Rhum.asserts.assertEquals(
-    //       intersectionBy(
-    //         [{ x: 1, y: 2 }],
-    //         [
-    //           { x: 2, q: 4 },
-    //           { x: 1, z: 4 },
-    //         ],
-    //         "x"
-    //       ),
-    //       [{ x: 1, y: 2 }]
-    //     );
-    //   }
-    // );
+  });
+  Rhum.testSuite("intersectionBy()", () => {
+    Rhum.testCase(
+      "Creates an array of unique values that are included in all given arrays given an iterator",
+      () => {
+        Rhum.asserts.assertEquals(
+          intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.4]),
+          [2.1]
+        );
+        Rhum.asserts.assertEquals(
+          intersectionBy(
+            (obj: any) => obj["x"],
+            [{ x: 1, y: 7 }],
+            [
+              { x: 2, y: 7 },
+              { x: 1, y: 35 },
+            ]
+          ),
+          [{ x: 1, y: 7 }]
+        );
+      }
+    );
+  });
+  Rhum.testSuite("intersectionWith()", () => {
+    Rhum.testCase(
+      "Creates an array of unique values that are included in all given arrays given an comparator",
+      () => {
+        const objects = [
+          { x: 1, y: 2 },
+          { x: 2, y: 1 },
+        ];
+        const others = [
+          { x: 1, y: 1 },
+          { x: 1, y: 2 },
+        ];
+        Rhum.asserts.assertEquals(
+          intersectionWith(
+            (a, b) => JSON.stringify(a) === JSON.stringify(b),
+            objects,
+            others
+          ),
+          [{ x: 1, y: 2 }]
+        );
+      }
+    );
   });
   Rhum.testSuite("zip()", () => {
     Rhum.testCase("should zip", () => {
@@ -349,6 +369,31 @@ Rhum.testPlan("array/*", () => {
         ["b", 2, false],
       ]);
     });
+  });
+
+  Rhum.testSuite("lastIndexOf()", () => {
+    Rhum.testCase("gets the last index of a value in an array ", () => {
+      const testArr = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+      Rhum.asserts.assertEquals(lastIndexOf(testArr, 3), 6);
+    });
+  });
+  Rhum.testSuite("shank", () => {
+    Rhum.testCase(
+      "works like Array.prototype.splice() but returns new arrays rather than mutating existing ones.",
+      () => {
+        const names = ["alpha", "bravo", "charlie"];
+        const namesAndDelta = shank(names, 1, 0, "delta");
+        const namesNoBravo = shank(names, 1, 1);
+        Rhum.asserts.assertEquals(namesAndDelta, [
+          "alpha",
+          "delta",
+          "bravo",
+          "charlie",
+        ]);
+        Rhum.asserts.assertEquals(namesNoBravo, ["alpha", "charlie"]);
+        Rhum.asserts.assertEquals(names, ["alpha", "bravo", "charlie"]);
+      }
+    );
   });
   Rhum.testSuite("unzip()", () => {
     Rhum.testCase("should unzip", () => {
