@@ -1,4 +1,4 @@
-import { Predicate } from "../types/Predicate";
+import { Predicate } from "../types/Predicate.d.ts";
 
 export const findLastIndex = <T>(
   arr: T[],

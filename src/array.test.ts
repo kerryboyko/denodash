@@ -11,6 +11,8 @@ import flattenDeep from "./array/flattenDeep.ts";
 import flattenDepth from "./array/flattenDepth.ts";
 import fromPairs from "./array/fromPairs.ts";
 import intersection from "./array/intersection.ts";
+import zip from './array/zip.ts';
+import unzip from './array/unzip.ts';
 
 Rhum.testPlan("array.ts", () => {
   Rhum.testSuite("chunk()", () => {
@@ -189,6 +191,29 @@ Rhum.testPlan("array.ts", () => {
     //     );
     //   }
     // );
+  });
+  Rhum.testSuite("zip()", () => {
+    Rhum.testCase("should zip", () => {
+      Rhum.asserts.assertEquals(zip(["a", "b"], [1, 2], [true, false]), [
+        ["a", 1, true],
+        ["b", 2, false],
+      ]);
+    });
+  });
+  Rhum.testSuite("unzip()", () => {
+    Rhum.testCase("should unzip", () => {
+      Rhum.asserts.assertEquals(
+        unzip([
+          ["a", 1, true],
+          ["b", 2, false],
+        ]),
+        [
+          ["a", "b"],
+          [1, 2],
+          [true, false],
+        ]
+      );
+    });
   });
 });
 

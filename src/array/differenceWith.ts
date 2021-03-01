@@ -1,4 +1,4 @@
-import type {Comparator} from '../types/Comparator';
+import type {Comparator} from '../types/Comparator.d.ts';
 
 export const differenceWith = <T>(
   a: T[],
