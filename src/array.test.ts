@@ -13,6 +13,7 @@ import fromPairs from "./array/fromPairs.ts";
 import intersection from "./array/intersection.ts";
 import zip from './array/zip.ts';
 import unzip from './array/unzip.ts';
+import xor from './array/xor.ts';
 
 Rhum.testPlan("array.ts", () => {
   Rhum.testSuite("chunk()", () => {
@@ -211,6 +212,16 @@ Rhum.testPlan("array.ts", () => {
           ["a", "b"],
           [1, 2],
           [true, false],
+        ]
+      );
+    });
+  });
+  Rhum.testSuite("xor()", () => {
+    Rhum.testCase("should produce the symmetric difference", () => {
+      Rhum.asserts.assertEquals(
+        xor([2, 1], [2, 3]),
+        [
+          1, 3
         ]
       );
     });
