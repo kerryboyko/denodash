@@ -1,11 +1,6 @@
 import type { Iteratee } from "../types/Iteratee.d.ts";
-import identity from '../utils/identity.ts';
 
-export const differenceBy = <T>(
-  a: T[],
-  b: T[],
-  iteratee: Iteratee<T> = identity
-) => {
+export const differenceBy = <T>(iteratee: Iteratee<T>) => (a: T[], b: T[]) => {
   const diffs: T[] = [];
   const bMap = b.map(iteratee);
   for (const val of a) {

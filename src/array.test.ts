@@ -7,6 +7,7 @@ import chunkIntoParts from "./array/chunkIntoParts.ts";
 
 import chunk from "./array/chunk.ts";
 import difference from "./array/difference.ts";
+import differenceBy from "./array/differenceBy.ts";
 import differenceWith from "./array/differenceWith.ts";
 import dropWhile from "./array/dropWhile.ts";
 import dropWhileRight from "./array/dropWhileRight.ts";
@@ -44,15 +45,17 @@ Rhum.testPlan("array/*", () => {
       }
     );
   });
-  Rhum.testSuite("bifurcateBy()", () => {
+  Rhum.testSuite("bifurcateBy()()", () => {
     Rhum.testCase(
       "Should split values into two groups based on a given filter function",
       () => {
         Rhum.asserts.assertEquals(
-          bifurcateBy(
-            ["beep", "boop", "foo", "bar"],
-            (x: string) => x.charAt(0) === "b"
-          ),
+          bifurcateBy((x: string) => x.charAt(0) === "b")([
+            "beep",
+            "boop",
+            "foo",
+            "bar",
+          ]),
           [["beep", "boop", "bar"], ["foo"]]
         );
       }
@@ -71,456 +74,418 @@ Rhum.testPlan("array/*", () => {
       }
     );
   });
-  Rhum.testSuite("chunk()", () => {
-    const array = [0, 1, 2, 3, 4, 5];
+});
+Rhum.testSuite("chunk()", () => {
+  const array = [0, 1, 2, 3, 4, 5];
 
-    Rhum.testCase("should return chunked arrays", () => {
-      const actual = chunk(array, 3);
-      Rhum.asserts.assertEquals(actual, [
-        [0, 1, 2],
-        [3, 4, 5],
-      ]);
-    });
-
-    Rhum.testCase("should return the last chunk as remaining elements", () => {
-      const actual = chunk(array, 4);
-      Rhum.asserts.assertEquals(actual, [
-        [0, 1, 2, 3],
-        [4, 5],
-      ]);
-    });
-
-    Rhum.testCase("should ensure the minimum `size` is `0`", () => {
-      const actual = chunk(array, -1);
-      Rhum.asserts.assertEquals(actual, []);
-    });
-
-    Rhum.testCase("should coerce `size` to an integer", () => {
-      Rhum.asserts.assertEquals(chunk(array, array.length / 4), [
-        [0],
-        [1],
-        [2],
-        [3],
-        [4],
-        [5],
-      ]);
-    });
-  });
-  Rhum.testSuite("chunk()", () => {
-    const array = [0, 1, 2, 3, 4, 5];
-
-    Rhum.testCase("should return chunked arrays", () => {
-      const actual = chunk(array, 3);
-      Rhum.asserts.assertEquals(actual, [
-        [0, 1, 2],
-        [3, 4, 5],
-      ]);
-    });
-
-    Rhum.testCase("should return the last chunk as remaining elements", () => {
-      const actual = chunk(array, 4);
-      Rhum.asserts.assertEquals(actual, [
-        [0, 1, 2, 3],
-        [4, 5],
-      ]);
-    });
-
-    Rhum.testCase("should ensure the minimum `size` is `0`", () => {
-      const actual = chunk(array, -1);
-      Rhum.asserts.assertEquals(actual, []);
-    });
-
-    Rhum.testCase("should coerce `size` to an integer", () => {
-      Rhum.asserts.assertEquals(chunk(array, array.length / 4), [
-        [0],
-        [1],
-        [2],
-        [3],
-        [4],
-        [5],
-      ]);
-    });
-  });
-  Rhum.testSuite("chunkIntoParts()", () => {
-    Rhum.testCase("should chunk into n parts", () => {
-      const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 12), [
-        [1],
-        [2],
-        [3],
-        [4],
-        [5],
-        [6],
-        [7],
-        [8],
-        [9],
-        [10],
-        [11],
-        [12],
-      ]);
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 7), [
-        [1, 2],
-        [3, 4],
-        [5, 6],
-        [7, 8],
-        [9, 10],
-        [11, 12],
-      ]);
-
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 6), [
-        [1, 2],
-        [3, 4],
-        [5, 6],
-        [7, 8],
-        [9, 10],
-        [11, 12],
-      ]);
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 5), [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-        [10, 11, 12],
-      ]);
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 4), [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-        [10, 11, 12],
-      ]);
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 3), [
-        [1, 2, 3, 4],
-        [5, 6, 7, 8],
-        [9, 10, 11, 12],
-      ]);
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 2), [
-        [1, 2, 3, 4, 5, 6],
-        [7, 8, 9, 10, 11, 12],
-      ]);
-      Rhum.asserts.assertEquals(chunkIntoParts(testArray, 1), [testArray]);
-    });
-  });
-  Rhum.testSuite("difference()/differenceBy()", () => {
-    Rhum.testCase("should return the difference of two arrays", () => {
-      const a = [0, 1, 2];
-      const b = [0, 5, 2];
-      Rhum.asserts.assertEquals(difference(a, b), [1]);
-    });
-    Rhum.testCase("accepts an iteratee as third parameter", () => {
-      const a = [0.3, 1.7, 6.2, 3.2];
-      const b = [0.5, 2.1, 6.8];
-      Rhum.asserts.assertEquals(difference(a, b, Math.floor), [1.7, 3.2]);
-    });
+  Rhum.testCase("should return chunked arrays", () => {
+    const actual = chunk(array, 3);
+    Rhum.asserts.assertEquals(actual, [
+      [0, 1, 2],
+      [3, 4, 5],
+    ]);
   });
 
-  Rhum.testSuite("differenceWith()", () => {
-    Rhum.testCase(
-      "should work with a comparator as the third parameter",
-      () => {
-        const objects = [
-          { x: 1, y: 2 },
-          { x: 1, y: 4 },
-          { x: 2, y: 1 },
-        ];
-        const actual1 = differenceWith(
-          objects,
-          [{ x: 1, y: 2 }],
-          (obj1, obj2) => obj1.x === obj2.x
-        );
-        const actual2 = differenceWith(
-          objects,
-          [{ x: 3, y: 2 }],
-          (obj1, obj2) => obj1.y === obj2.y
-        );
+  Rhum.testCase("should return the last chunk as remaining elements", () => {
+    const actual = chunk(array, 4);
+    Rhum.asserts.assertEquals(actual, [
+      [0, 1, 2, 3],
+      [4, 5],
+    ]);
+  });
 
-        Rhum.asserts.assertEquals(actual1, [{ x: 2, y: 1 }]);
-        Rhum.asserts.assertEquals(actual2, [
-          { x: 1, y: 4 },
-          { x: 2, y: 1 },
-        ]);
-      }
-    );
+  Rhum.testCase("should ensure the minimum `size` is `0`", () => {
+    const actual = chunk(array, -1);
+    Rhum.asserts.assertEquals(actual, []);
   });
-  Rhum.testSuite("dropWhile()", () => {
-    Rhum.testCase(
-      "should drop elements until it finds the first element that doesn't match",
-      () => {
-        const testArr = [1, 2, 3, 4, 3, 2, 1];
-        Rhum.asserts.assertEquals(
-          dropWhile(testArr, (x) => x < 3),
-          [3, 4, 3, 2, 1]
-        );
-      }
-    );
+
+  Rhum.testCase("should coerce `size` to an integer", () => {
+    Rhum.asserts.assertEquals(chunk(array, array.length / 4), [
+      [0],
+      [1],
+      [2],
+      [3],
+      [4],
+      [5],
+    ]);
   });
-  Rhum.testSuite("dropWhileRight()", () => {
-    Rhum.testCase(
-      "should drop elements from the end until it finds the first element that doesn't match",
-      () => {
-        const testArr = [1, 2, 3, 4, 3, 2, 1];
-        Rhum.asserts.assertEquals(
-          dropWhileRight(testArr, (x) => x < 3),
-          [1, 2, 3, 4, 3]
-        );
-      }
-    );
+});
+Rhum.testSuite("chunkIntoParts()", () => {
+  Rhum.testCase("should chunk into n parts", () => {
+    const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 12), [
+      [1],
+      [2],
+      [3],
+      [4],
+      [5],
+      [6],
+      [7],
+      [8],
+      [9],
+      [10],
+      [11],
+      [12],
+    ]);
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 7), [
+      [1, 2],
+      [3, 4],
+      [5, 6],
+      [7, 8],
+      [9, 10],
+      [11, 12],
+    ]);
+
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 6), [
+      [1, 2],
+      [3, 4],
+      [5, 6],
+      [7, 8],
+      [9, 10],
+      [11, 12],
+    ]);
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 5), [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+      [10, 11, 12],
+    ]);
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 4), [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+      [10, 11, 12],
+    ]);
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 3), [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+      [9, 10, 11, 12],
+    ]);
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 2), [
+      [1, 2, 3, 4, 5, 6],
+      [7, 8, 9, 10, 11, 12],
+    ]);
+    Rhum.asserts.assertEquals(chunkIntoParts(testArray, 1), [testArray]);
   });
-  Rhum.testSuite("findLastIndex()", () => {
-    Rhum.testCase("should find the last index that matches", () => {
+});
+Rhum.testSuite("difference()", () => {
+  Rhum.testCase("should return the difference of two arrays", () => {
+    const a = [0, 1, 2];
+    const b = [0, 5, 2];
+    Rhum.asserts.assertEquals(difference(a, b), [1]);
+  });
+});
+Rhum.testSuite("differenceBy()()", () => {
+  Rhum.testCase("accepts an iteratee", () => {
+    const a = [0.3, 1.7, 6.2, 3.2];
+    const b = [0.5, 2.1, 6.8];
+    Rhum.asserts.assertEquals(differenceBy(Math.floor)(a, b), [1.7, 3.2]);
+  });
+});
+
+Rhum.testSuite("differenceWith()()", () => {
+  Rhum.testCase("should work with a comparator", () => {
+    const objects = [
+      { x: 1, y: 2 },
+      { x: 1, y: 4 },
+      { x: 2, y: 1 },
+    ];
+    const actual1 = differenceWith<any & { x: any }>(
+      (obj1, obj2) => obj1.x === obj2.x
+    )(objects, [{ x: 1, y: 2 }]);
+    const actual2 = differenceWith<any & { y: any }>(
+      (obj1, obj2) => obj1.y === obj2.y
+    )(objects, [{ x: 3, y: 2 }]);
+
+    Rhum.asserts.assertEquals(actual1, [{ x: 2, y: 1 }]);
+    Rhum.asserts.assertEquals(actual2, [
+      { x: 1, y: 4 },
+      { x: 2, y: 1 },
+    ]);
+  });
+});
+Rhum.testSuite("dropWhile()", () => {
+  Rhum.testCase(
+    "should drop elements until it finds the first element that doesn't match",
+    () => {
       const testArr = [1, 2, 3, 4, 3, 2, 1];
       Rhum.asserts.assertEquals(
-        findLastIndex(testArr, (x: number) => x === 3),
-        4
+        dropWhile(testArr, (x) => x < 3),
+        [3, 4, 3, 2, 1]
       );
-    });
-  });
-  Rhum.testSuite("flatten()", () => {
-    Rhum.testCase("should flatten an index one level", () => {
-      const testArr = [1, [2, [3, [4]], 5]];
-      Rhum.asserts.assertEquals(flatten(testArr), [1, 2, [3, [4]], 5]);
-    });
-  });
-  Rhum.testSuite("flattenDeep()", () => {
-    Rhum.testCase("should flatten an index completely", () => {
-      const testArr = [1, [2, [3, [4]], 5]];
-      Rhum.asserts.assertEquals(flattenDeep(testArr), [1, 2, 3, 4, 5]);
-    });
-  });
-  Rhum.testSuite("flattenDepth()", () => {
-    Rhum.testCase("should flatten an index n levels", () => {
-      const testArr = [1, [2, [3, [4]], 5]];
-      Rhum.asserts.assertEquals(flattenDepth(testArr, 1), [1, 2, [3, [4]], 5]);
-      Rhum.asserts.assertEquals(flattenDepth(testArr, 2), [1, 2, 3, [4], 5]);
-      Rhum.asserts.assertEquals(flattenDepth(testArr, 5), [1, 2, 3, 4, 5]);
-    });
-  });
-  Rhum.testSuite("fromPairs()", () => {
-    Rhum.testCase(
-      "should create an object from an array of key value tuples",
-      () => {
-        const testArr = [
-          ["a", 1],
-          ["b", 2],
-        ];
-        Rhum.asserts.assertEquals(fromPairs(testArr), { a: 1, b: 2 });
-      }
-    );
-  });
-  Rhum.testSuite("intersection()", () => {
-    Rhum.testCase(
-      "Creates an array of unique values that are included in all given arrays",
-      () => {
-        const testArrs = [
-          [2, 1],
-          [2, 3],
-        ];
-        Rhum.asserts.assertEquals(intersection(...testArrs), [2]);
-      }
-    );
-  });
-  Rhum.testSuite("intersectionBy()", () => {
-    Rhum.testCase(
-      "Creates an array of unique values that are included in all given arrays given an iterator",
-      () => {
-        Rhum.asserts.assertEquals(
-          intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.4]),
-          [2.1]
-        );
-        Rhum.asserts.assertEquals(
-          intersectionBy(
-            (obj: any) => obj["x"],
-            [{ x: 1, y: 7 }],
-            [
-              { x: 2, y: 7 },
-              { x: 1, y: 35 },
-            ]
-          ),
-          [{ x: 1, y: 7 }]
-        );
-      }
-    );
-  });
-  Rhum.testSuite("intersectionWith()", () => {
-    Rhum.testCase(
-      "Creates an array of unique values that are included in all given arrays given an comparator",
-      () => {
-        const objects = [
-          { x: 1, y: 2 },
-          { x: 2, y: 1 },
-        ];
-        const others = [
-          { x: 1, y: 1 },
-          { x: 1, y: 2 },
-        ];
-        Rhum.asserts.assertEquals(
-          intersectionWith(
-            (a, b) => JSON.stringify(a) === JSON.stringify(b),
-            objects,
-            others
-          ),
-          [{ x: 1, y: 2 }]
-        );
-      }
-    );
-  });
-  Rhum.testSuite("zip()", () => {
-    Rhum.testCase("should zip", () => {
-      Rhum.asserts.assertEquals(zip(["a", "b"], [1, 2], [true, false]), [
-        ["a", 1, true],
-        ["b", 2, false],
-      ]);
-    });
-  });
-
-  Rhum.testSuite("lastIndexOf()", () => {
-    Rhum.testCase("gets the last index of a value in an array ", () => {
-      const testArr = [1, 2, 3, 4, 5, 4, 3, 2, 1];
-      Rhum.asserts.assertEquals(lastIndexOf(testArr, 3), 6);
-    });
-  });
-  Rhum.testSuite("shank", () => {
-    Rhum.testCase(
-      "works like Array.prototype.splice() but returns new arrays rather than mutating existing ones.",
-      () => {
-        const names = ["alpha", "bravo", "charlie"];
-        const namesAndDelta = shank(names, 1, 0, "delta");
-        const namesNoBravo = shank(names, 1, 1);
-        Rhum.asserts.assertEquals(namesAndDelta, [
-          "alpha",
-          "delta",
-          "bravo",
-          "charlie",
-        ]);
-        Rhum.asserts.assertEquals(namesNoBravo, ["alpha", "charlie"]);
-        Rhum.asserts.assertEquals(names, ["alpha", "bravo", "charlie"]);
-      }
-    );
-  });
-  Rhum.testSuite("union()", () => {
-    Rhum.testCase(
-      "Creates an array of unique values, in order, from all given arrays",
-      () => {
-        Rhum.asserts.assertEquals(union([2, 1, 3], [4, 3, 7]), [2, 1, 3, 4, 7]);
-      }
-    );
-  });
-  Rhum.testSuite("unionBy()", () => {
-    Rhum.testCase(
-      "Creates an array of unique values, in order, from all given arrays, given an iteratee",
-      () => {
-        Rhum.asserts.assertEquals(unionBy(Math.floor, [2.1], [1.2, 2.3]), [
-          2.1,
-          1.2,
-        ]);
-        Rhum.asserts.assertEquals(
-          unionBy(
-            (elem: Object & { x: number }) => elem["x"],
-            [{ x: 1, y: 7 }],
-            [
-              { x: 2, y: 9 },
-              { x: 1, y: 30 },
-              { x: 2, y: 44 },
-            ]
-          ),
-          [
-            { x: 1, y: 7 },
-            { x: 2, y: 9 },
-          ]
-        );
-      }
-    );
-  });
-  Rhum.testSuite("unionWith()", () => {
-    Rhum.testCase(
-      "Creates an array of unique values, in order, from all given arrays, given a comparator",
-      () => {
-        const objects = [
-          { x: 1, y: 2 },
-          { x: 2, y: 1 },
-        ];
-        const others = [
-          { x: 1, y: 1 },
-          { x: 1, y: 2 },
-        ];
-        Rhum.asserts.assertEquals(
-          unionWith(
-            (a, b) => JSON.stringify(a) === JSON.stringify(b),
-            objects,
-            others
-          ),
-          [
-            { x: 1, y: 2 },
-            { x: 2, y: 1 },
-            { x: 1, y: 1 },
-          ]
-        );
-      }
-    );
-  });
-  Rhum.testSuite("uniq", () => {
-    Rhum.testCase("Creates a duplicate-free version of an array", () => {
-      Rhum.asserts.assertEquals(uniq([1, 2, 1]), [1, 2]);
-    });
-  });
-  Rhum.testSuite("uniqBy", () => {
-    Rhum.testCase(
-      "Creates a duplicate-free version of an array, accepting an iterator",
-      () => {
-        Rhum.asserts.assertEquals(uniqBy(Math.floor, [2.1, 1.2, 2.3]), [
-          2.1,
-          1.2,
-        ]);
-        Rhum.asserts.assertEquals(
-          uniqBy((elem: Object & { x: number }) => elem["x"], [
-            { x: 1 },
-            { x: 2 },
-            { x: 1 },
-          ]),
-          [{ x: 1 }, { x: 2 }]
-        );
-      }
-    );
-  });
-  Rhum.testSuite("uniqWith", () => {
-    Rhum.testCase(
-      "Creates a duplicate-free version of an array, accepting a comparator",
-      () => {
-        Rhum.asserts.assertEquals(
-          uniqWith(
-            (a: any, b: any): boolean =>
-              JSON.stringify(a) === JSON.stringify(b),
-            [
-              { x: 1, y: 2 },
-              { x: 2, y: 1 },
-              { x: 1, y: 2 },
-            ]
-          ),
-          [
-            { x: 1, y: 2 },
-            { x: 2, y: 1 },
-          ]
-        );
-      }
-    );
-  });
-  Rhum.testSuite("unzip()", () => {
-    Rhum.testCase("should unzip", () => {
+    }
+  );
+});
+Rhum.testSuite("dropWhileRight()", () => {
+  Rhum.testCase(
+    "should drop elements from the end until it finds the first element that doesn't match",
+    () => {
+      const testArr = [1, 2, 3, 4, 3, 2, 1];
       Rhum.asserts.assertEquals(
-        unzip([
-          ["a", 1, true],
-          ["b", 2, false],
-        ]),
+        dropWhileRight(testArr, (x) => x < 3),
+        [1, 2, 3, 4, 3]
+      );
+    }
+  );
+});
+Rhum.testSuite("findLastIndex()", () => {
+  Rhum.testCase("should find the last index that matches", () => {
+    const testArr = [1, 2, 3, 4, 3, 2, 1];
+    Rhum.asserts.assertEquals(
+      findLastIndex(testArr, (x: number) => x === 3),
+      4
+    );
+  });
+});
+Rhum.testSuite("flatten()", () => {
+  Rhum.testCase("should flatten an index one level", () => {
+    const testArr = [1, [2, [3, [4]], 5]];
+    Rhum.asserts.assertEquals(flatten(testArr), [1, 2, [3, [4]], 5]);
+  });
+});
+Rhum.testSuite("flattenDeep()", () => {
+  Rhum.testCase("should flatten an index completely", () => {
+    const testArr = [1, [2, [3, [4]], 5]];
+    Rhum.asserts.assertEquals(flattenDeep(testArr), [1, 2, 3, 4, 5]);
+  });
+});
+Rhum.testSuite("flattenDepth()", () => {
+  Rhum.testCase("should flatten an index n levels", () => {
+    const testArr = [1, [2, [3, [4]], 5]];
+    Rhum.asserts.assertEquals(flattenDepth(testArr, 1), [1, 2, [3, [4]], 5]);
+    Rhum.asserts.assertEquals(flattenDepth(testArr, 2), [1, 2, 3, [4], 5]);
+    Rhum.asserts.assertEquals(flattenDepth(testArr, 5), [1, 2, 3, 4, 5]);
+  });
+});
+Rhum.testSuite("fromPairs()", () => {
+  Rhum.testCase(
+    "should create an object from an array of key value tuples",
+    () => {
+      const testArr = [
+        ["a", 1],
+        ["b", 2],
+      ];
+      Rhum.asserts.assertEquals(fromPairs(testArr), { a: 1, b: 2 });
+    }
+  );
+});
+Rhum.testSuite("intersection()", () => {
+  Rhum.testCase(
+    "Creates an array of unique values that are included in all given arrays",
+    () => {
+      const testArrs = [
+        [2, 1],
+        [2, 3],
+      ];
+      Rhum.asserts.assertEquals(intersection(...testArrs), [2]);
+    }
+  );
+});
+Rhum.testSuite("intersectionBy()()", () => {
+  Rhum.testCase(
+    "Creates an array of unique values that are included in all given arrays given an iterator",
+    () => {
+      Rhum.asserts.assertEquals(
+        intersectionBy(Math.floor)([2.1, 1.2], [2.3, 3.4]),
+        [2.1]
+      );
+      Rhum.asserts.assertEquals(
+        intersectionBy((obj: any) => obj["x"])(
+          [{ x: 1, y: 7 }],
+          [
+            { x: 2, y: 7 },
+            { x: 1, y: 35 },
+          ]
+        ),
+        [{ x: 1, y: 7 }]
+      );
+    }
+  );
+});
+Rhum.testSuite("intersectionWith()()", () => {
+  Rhum.testCase(
+    "Creates an array of unique values that are included in all given arrays given an comparator",
+    () => {
+      const objects = [
+        { x: 1, y: 2 },
+        { x: 2, y: 1 },
+      ];
+      const others = [
+        { x: 1, y: 1 },
+        { x: 1, y: 2 },
+      ];
+      Rhum.asserts.assertEquals(
+        intersectionWith((a, b) => JSON.stringify(a) === JSON.stringify(b))(
+          objects,
+          others
+        ),
+        [{ x: 1, y: 2 }]
+      );
+    }
+  );
+});
+Rhum.testSuite("zip()", () => {
+  Rhum.testCase("should zip", () => {
+    Rhum.asserts.assertEquals(zip(["a", "b"], [1, 2], [true, false]), [
+      ["a", 1, true],
+      ["b", 2, false],
+    ]);
+  });
+});
+
+Rhum.testSuite("lastIndexOf()", () => {
+  Rhum.testCase("gets the last index of a value in an array ", () => {
+    const testArr = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+    Rhum.asserts.assertEquals(lastIndexOf(testArr, 3), 6);
+  });
+});
+Rhum.testSuite("shank", () => {
+  Rhum.testCase(
+    "works like Array.prototype.splice() but returns new arrays rather than mutating existing ones.",
+    () => {
+      const names = ["alpha", "bravo", "charlie"];
+      const namesAndDelta = shank(names, 1, 0, "delta");
+      const namesNoBravo = shank(names, 1, 1);
+      Rhum.asserts.assertEquals(namesAndDelta, [
+        "alpha",
+        "delta",
+        "bravo",
+        "charlie",
+      ]);
+      Rhum.asserts.assertEquals(namesNoBravo, ["alpha", "charlie"]);
+      Rhum.asserts.assertEquals(names, ["alpha", "bravo", "charlie"]);
+    }
+  );
+});
+Rhum.testSuite("union()", () => {
+  Rhum.testCase(
+    "Creates an array of unique values, in order, from all given arrays",
+    () => {
+      Rhum.asserts.assertEquals(union([2, 1, 3], [4, 3, 7]), [2, 1, 3, 4, 7]);
+    }
+  );
+});
+Rhum.testSuite("unionBy()()", () => {
+  Rhum.testCase(
+    "Creates an array of unique values, in order, from all given arrays, given an iteratee",
+    () => {
+      Rhum.asserts.assertEquals(unionBy(Math.floor)([2.1], [1.2, 2.3]), [
+        2.1,
+        1.2,
+      ]);
+      Rhum.asserts.assertEquals(
+        unionBy((elem: any & { x: number }) => elem["x"])(
+          [{ x: 1, y: 7 }],
+          [
+            { x: 2, y: 9 },
+            { x: 1, y: 30 },
+            { x: 2, y: 44 },
+          ]
+        ),
         [
-          ["a", "b"],
-          [1, 2],
-          [true, false],
+          { x: 1, y: 7 },
+          { x: 2, y: 9 },
         ]
       );
-    });
+    }
+  );
+});
+Rhum.testSuite("unionWith()()", () => {
+  Rhum.testCase(
+    "Creates an array of unique values, in order, from all given arrays, given a comparator",
+    () => {
+      const objects = [
+        { x: 1, y: 2 },
+        { x: 2, y: 1 },
+      ];
+      const others = [
+        { x: 1, y: 1 },
+        { x: 1, y: 2 },
+      ];
+      Rhum.asserts.assertEquals(
+        unionWith((a, b) => JSON.stringify(a) === JSON.stringify(b))(
+          objects,
+          others
+        ),
+        [
+          { x: 1, y: 2 },
+          { x: 2, y: 1 },
+          { x: 1, y: 1 },
+        ]
+      );
+    }
+  );
+});
+Rhum.testSuite("uniq()", () => {
+  Rhum.testCase("Creates a duplicate-free version of an array", () => {
+    Rhum.asserts.assertEquals(uniq([1, 2, 1]), [1, 2]);
   });
-  Rhum.testSuite("xor()", () => {
-    Rhum.testCase("should produce the symmetric difference", () => {
-      Rhum.asserts.assertEquals(xor([2, 1], [2, 3]), [1, 3]);
-    });
+});
+Rhum.testSuite("uniqBy()()", () => {
+  Rhum.testCase(
+    "Creates a duplicate-free version of an array, accepting an iterator",
+    () => {
+      Rhum.asserts.assertEquals(uniqBy(Math.floor)([2.1, 1.2, 2.3]), [
+        2.1,
+        1.2,
+      ]);
+      Rhum.asserts.assertEquals(
+        uniqBy((elem: Object & { x: number }) => elem["x"])([
+          { x: 1 },
+          { x: 2 },
+          { x: 1 },
+        ]),
+        [{ x: 1 }, { x: 2 }]
+      );
+    }
+  );
+});
+Rhum.testSuite("uniqWith()()", () => {
+  Rhum.testCase(
+    "Creates a duplicate-free version of an array, accepting a comparator",
+    () => {
+      Rhum.asserts.assertEquals(
+        uniqWith(
+          (a: any, b: any): boolean => JSON.stringify(a) === JSON.stringify(b)
+        )([
+          { x: 1, y: 2 },
+          { x: 2, y: 1 },
+          { x: 1, y: 2 },
+        ]),
+        [
+          { x: 1, y: 2 },
+          { x: 2, y: 1 },
+        ]
+      );
+    }
+  );
+});
+Rhum.testSuite("unzip()", () => {
+  Rhum.testCase("should unzip", () => {
+    Rhum.asserts.assertEquals(
+      unzip([
+        ["a", 1, true],
+        ["b", 2, false],
+      ]),
+      [
+        ["a", "b"],
+        [1, 2],
+        [true, false],
+      ]
+    );
+  });
+});
+Rhum.testSuite("xor()", () => {
+  Rhum.testCase("should produce the symmetric difference", () => {
+    Rhum.asserts.assertEquals(xor([2, 1], [2, 3]), [1, 3]);
+  });
+});
+Rhum.testSuite("zip()", () => {
+  Rhum.testCase("should zip", () => {
+    Rhum.asserts.assertEquals(zip(["a", "b"], [1, 2], [true, false]), [
+      ["a", 1, true],
+      ["b", 2, false],
+    ]);
   });
 });
 

@@ -1,6 +1,6 @@
 import type { Iteratee } from "../types/Iteratee.d.ts";
 
-const intersectionBy = <T>(fn: Iteratee<T>, ...arrays: T[][]): T[] => {
+const intersectionBy = <T>(fn: Iteratee<T>) => (...arrays: T[][]): T[] => {
   const baseArray = arrays[0];
   const matchingArrays = arrays.slice(1);
   const matches: T[] = [];
