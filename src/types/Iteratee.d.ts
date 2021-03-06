@@ -1,1 +1,1 @@
-export type Iteratee<T> = (x: T) => any;
+export type Iteratee<T, U> = (x: T) => U;

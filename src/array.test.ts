@@ -301,6 +301,16 @@ Rhum.testSuite("intersectionBy()()", () => {
       );
     }
   );
+  Rhum.testCase("Works when curried", () => {
+    const arr1 = [2.1, 1.2];
+    const arr2 = [2.3, 3.2];
+    const intersectionByFloor = intersectionBy(Math.floor);
+    const intersectionByDecimal = intersectionBy(
+      (x: number) => Math.round((x * 10) - (Math.floor(x) * 10))
+    );
+    Rhum.asserts.assertEquals(intersectionByFloor(arr1, arr2), [2.1]);
+    Rhum.asserts.assertEquals(intersectionByDecimal(arr1, arr2), [1.2]);
+  });
 });
 Rhum.testSuite("intersectionWith()()", () => {
   Rhum.testCase(
