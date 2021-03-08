@@ -49,7 +49,7 @@ const mergeSort = <T>(
       return merge(array, start, middle, end);
     };
 
-    return (array: T[]) => merger(array.slice(), 0, array.length);
+    return (array: T[]): T[] => merger(array.slice(), 0, array.length);
   })();
 
 export default mergeSort;

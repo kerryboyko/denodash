@@ -7,7 +7,7 @@ import flatMapDeep from "./collection/flatMapDeep.ts";
 import flatMapDepth from "./collection/flatMapDepth.ts";
 import groupBy from "./collection/groupBy.ts";
 import keyBy from "./collection/keyBy.ts";
-import orderBy from "./collection/orderBy.ts";
+import sortBy from "./collection/sortBy.ts";
 
 Rhum.testPlan("collection/*", () => {
   Rhum.testSuite("countBy()()", () => {
@@ -112,44 +112,44 @@ Rhum.testPlan("collection/*", () => {
       }
     );
   });
-  // Rhum.testSuite("orderBy()()", () => {
-  //   Rhum.testCase(
-  //     "sorts the order of the iteratees based on the criteria provided",
-  //     () => {
-  //       type TestType = { user: string; age: number };
-  //       const testArray: TestType[] = [
-  //         { user: "fred", age: 48 },
-  //         { user: "barney", age: 34 },
-  //         { user: "fred", age: 40 },
-  //         { user: "barney", age: 36 },
-  //       ];
-  //       Rhum.asserts.assertEquals(
-  //         orderBy(
-  //           (a: TestType, b: TestType): number => a.user.localeCompare(b.user),
-  //           (a: TestType, b: TestType): number => a.age - b.age
-  //         )(testArray),
-  //         [
-  //           { user: "barney", age: 34 },
-  //           { user: "barney", age: 36 },
-  //           { user: "fred", age: 40 },
-  //           { user: "fred", age: 48 },
-  //         ]
-  //       );
-  //       Rhum.asserts.assertEquals(
-  //         orderBy(
-  //           (a: TestType, b: TestType): number => a.user.localeCompare(b.user),
-  //           (a: TestType, b: TestType): number => b.age - a.age
-  //         )(testArray),
-  //         [
-  //           { user: "barney", age: 36 },
-  //           { user: "barney", age: 34 },
-  //           { user: "fred", age: 48 },
-  //           { user: "fred", age: 40 },
-  //         ]
-  //       );
-  //     }
-  //   );
-  // });
+  Rhum.testSuite("sortBy()()", () => {
+    Rhum.testCase(
+      "sorts the order of the iteratees based on the criteria provided",
+      () => {
+        type TestType = { user: string; age: number };
+        const testArray: TestType[] = [
+          { user: "fred", age: 48 },
+          { user: "barney", age: 34 },
+          { user: "fred", age: 40 },
+          { user: "barney", age: 36 },
+        ];
+        Rhum.asserts.assertEquals(
+          sortBy(
+            (a: TestType, b: TestType): number => a.user.localeCompare(b.user),
+            (a: TestType, b: TestType): number => a.age - b.age
+          )(testArray),
+          [
+            { user: "barney", age: 34 },
+            { user: "barney", age: 36 },
+            { user: "fred", age: 40 },
+            { user: "fred", age: 48 },
+          ]
+        );
+        Rhum.asserts.assertEquals(
+          sortBy(
+            (a: TestType, b: TestType): number => a.user.localeCompare(b.user),
+            (a: TestType, b: TestType): number => b.age - a.age
+          )(testArray),
+          [
+            { user: "barney", age: 36 },
+            { user: "barney", age: 34 },
+            { user: "fred", age: 48 },
+            { user: "fred", age: 40 },
+          ]
+        );
+      }
+    );
+  });
 });
 
 Rhum.run();
