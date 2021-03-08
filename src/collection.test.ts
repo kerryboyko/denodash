@@ -8,6 +8,10 @@ import flatMapDepth from "./collection/flatMapDepth.ts";
 import groupBy from "./collection/groupBy.ts";
 import keyBy from "./collection/keyBy.ts";
 import sortBy from "./collection/sortBy.ts";
+import shuffle from "./collection/shuffle.ts";
+import sample from "./collection/sample.ts";
+import sampleOne from "./collection/sampleOne.ts";
+
 
 Rhum.testPlan("collection/*", () => {
   Rhum.testSuite("countBy()()", () => {
@@ -149,6 +153,33 @@ Rhum.testPlan("collection/*", () => {
         );
       }
     );
+  });
+  Rhum.testSuite("sample()", () => {
+    Rhum.testCase("gets N unique elements of an array", () => {
+      const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const sampled1 = sample(arr, 3);
+      Rhum.asserts.assertArrayContains(arr, sampled1);
+      Rhum.asserts.assertStrictEquals(sampled1.length, 3); 
+      const sampled2 = sample(arr, 5);
+      Rhum.asserts.assertArrayContains(arr, sampled2);
+      Rhum.asserts.assertStrictEquals(sampled2.length, 5); 
+    });
+  });
+  Rhum.testSuite("sampleOne()", () => {
+    Rhum.testCase("returns one random element of an array", () => {
+      const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const one = sampleOne(arr);
+      Rhum.asserts.assertArrayContains(arr, one);
+      Rhum.asserts.assertEquals(Array.isArray(one), false);
+    });
+  });
+  Rhum.testSuite("shuffle()", () => {
+    Rhum.testCase("shuffles an array", () => {
+      const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const shuffled = shuffle(arr);
+      Rhum.asserts.assertArrayContains(shuffled, arr);
+      Rhum.asserts.assertNotEquals(shuffled, arr); // this test may fail, the chances of that however, are 10!:1 (3.6M/1); 
+    });
   });
 });
 

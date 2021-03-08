@@ -1,7 +1,7 @@
 import { Rhum } from "../testing_deps.ts";
 
-import bifurcate from "./array/bifurcate.ts";
-import bifurcateBy from "./array/bifurcateBy.ts";
+import partition from "./array/partition.ts";
+import partitionBy from "./array/partitionBy.ts";
 import cartesianProduct from "./array/cartesianProduct.ts";
 import chunkIntoParts from "./array/chunkIntoParts.ts";
 
@@ -34,23 +34,23 @@ import xor from "./array/xor.ts";
 import zip from "./array/zip.ts";
 
 Rhum.testPlan("array/*", () => {
-  Rhum.testSuite("bifurcate()", () => {
+  Rhum.testSuite("partition()", () => {
     Rhum.testCase(
       "Should split values into two groups based on a given filter array",
       () => {
         Rhum.asserts.assertEquals(
-          bifurcate(["beep", "boop", "foo", "bar"], [true, true, false, true]),
+          partition(["beep", "boop", "foo", "bar"], [true, true, false, true]),
           [["beep", "boop", "bar"], ["foo"]]
         );
       }
     );
   });
-  Rhum.testSuite("bifurcateBy()()", () => {
+  Rhum.testSuite("partitionBy()()", () => {
     Rhum.testCase(
       "Should split values into two groups based on a given filter function",
       () => {
         Rhum.asserts.assertEquals(
-          bifurcateBy((x: string) => x.charAt(0) === "b")([
+          partitionBy((x: string) => x.charAt(0) === "b")([
             "beep",
             "boop",
             "foo",

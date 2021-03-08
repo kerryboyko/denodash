@@ -1,6 +1,8 @@
 import { Rhum } from "../testing_deps.ts";
 import heapSort from "./utils/heapSort.ts";
 import mergeSort from "./utils/mergeSort.ts";
+import randomOf from './utils/randomOf.ts';
+
 import comparatorChain from "./utils/comparatorChain.ts";
 
 Rhum.testPlan("utils/*", () => {
@@ -192,6 +194,14 @@ Rhum.testPlan("utils/*", () => {
           },
         ]
       );
+    });
+  });
+  Rhum.testSuite("randomOf()", () => {
+    Rhum.testCase("gets a random integer number from 0 to n - 1", () => {
+      const r = randomOf(10);
+      for(let i = 0; i < 50; i++){
+        Rhum.asserts.assertArrayContains([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], r);
+      }
     });
   });
 });
