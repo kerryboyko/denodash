@@ -1,11 +1,14 @@
 import { Rhum } from "../testing_deps.ts";
 
-import after from "./function/after.ts";
 import delay from "./utils/delay.ts";
-import throttle from "./function/throttle.ts";
-import debounce from "./function/debounce.ts";
+
+import after from "./function/after.ts";
 import before from "./function/before.ts";
-import memoize from './function/memoize.ts';
+import debounce from "./function/debounce.ts";
+import defer from "./function/defer.ts";
+import memoize from "./function/memoize.ts";
+import throttle from "./function/throttle.ts";
+import once from "./function/once.ts";
 
 Rhum.testPlan("function/*", async () => {
   Rhum.testSuite("after", async () => {
@@ -292,65 +295,92 @@ Rhum.testPlan("function/*", async () => {
     );
   });
   Rhum.testSuite("memoize()", () => {
+    Rhum.testCase("should memoize a function", async () => {
+      let timesInvoked = 0;
+      const testFn = (s: string) => {
+        timesInvoked += 1;
+        return s.split("").reverse().join("");
+      };
+      const memoTestFn = memoize(testFn);
+
+      const t1 = memoTestFn("alpha");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 1);
+      Rhum.asserts.assertStrictEquals(t1, "ahpla");
+
+      const t2 = memoTestFn("beta");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 2);
+      Rhum.asserts.assertStrictEquals(t2, "ateb");
+
+      const t3 = memoTestFn("alpha");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 2);
+      Rhum.asserts.assertStrictEquals(t3, "ahpla");
+
+      const t4 = memoTestFn("beta");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 2);
+      Rhum.asserts.assertStrictEquals(t4, "ateb");
+    });
+    Rhum.testCase("should memoize a function with a custom hash", async () => {
+      let timesInvoked = 0;
+      const testFn = (s: string) => {
+        timesInvoked += 1;
+        return s.split("").reverse().join("");
+      };
+      const customHasher = (s: string): string => s.charAt(0);
+      const memoTestFn = memoize(testFn, customHasher);
+
+      const t1 = memoTestFn("alpha");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 1);
+      Rhum.asserts.assertStrictEquals(t1, "ahpla");
+
+      const t2 = memoTestFn("beta");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 2);
+      Rhum.asserts.assertStrictEquals(t2, "ateb");
+
+      const t3 = memoTestFn("alpha");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 2);
+      Rhum.asserts.assertStrictEquals(t3, "ahpla");
+
+      const t4 = memoTestFn("beta");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 2);
+      Rhum.asserts.assertStrictEquals(t4, "ateb");
+
+      const t5 = memoTestFn("brian");
+      Rhum.asserts.assertStrictEquals(timesInvoked, 2);
+      Rhum.asserts.assertStrictEquals(t5, "ateb");
+    });
+  });
+  Rhum.testSuite("defer()", () => {
     Rhum.testCase(
-      "should memoize a function",
+      "Should defer a function until the call stack has cleared",
       async () => {
-        let timesInvoked = 0; 
-        const testFn = (s: string) => {
-          timesInvoked += 1;
-          return s.split("").reverse().join("")
-        }
-        const memoTestFn = memoize(testFn);
-
-        const t1 = memoTestFn('alpha');
-        Rhum.asserts.assertStrictEquals(timesInvoked, 1);
-        Rhum.asserts.assertStrictEquals(t1, 'ahpla');
-
-        const t2 = memoTestFn('beta');
-        Rhum.asserts.assertStrictEquals(timesInvoked, 2);
-        Rhum.asserts.assertStrictEquals(t2, 'ateb');
-
-        const t3 = memoTestFn('alpha')
-        Rhum.asserts.assertStrictEquals(timesInvoked, 2);
-        Rhum.asserts.assertStrictEquals(t3, 'ahpla');
-
-        const t4 = memoTestFn('beta');
-        Rhum.asserts.assertStrictEquals(timesInvoked, 2);
-        Rhum.asserts.assertStrictEquals(t4, 'ateb');
+        let deferred = false;
+        defer((bool: boolean): void => {
+          deferred = bool;
+        }, true);
+        await delay(50);
+        Rhum.asserts.assertStrictEquals(deferred, true);
       }
     );
-    Rhum.testCase(
-      "should memoize a function with a custom hash",
-      async () => {
-        let timesInvoked = 0; 
-        const testFn = (s: string) => {
-          timesInvoked += 1;
-          return s.split("").reverse().join("")
-        }
-        const customHasher = (s: string):string => s.charAt(0)
-        const memoTestFn = memoize(testFn, customHasher);
-
-        const t1 = memoTestFn('alpha');
-        Rhum.asserts.assertStrictEquals(timesInvoked, 1);
-        Rhum.asserts.assertStrictEquals(t1, 'ahpla');
-
-        const t2 = memoTestFn('beta');
-        Rhum.asserts.assertStrictEquals(timesInvoked, 2);
-        Rhum.asserts.assertStrictEquals(t2, 'ateb');
-
-        const t3 = memoTestFn('alpha')
-        Rhum.asserts.assertStrictEquals(timesInvoked, 2);
-        Rhum.asserts.assertStrictEquals(t3, 'ahpla');
-
-        const t4 = memoTestFn('beta');
-        Rhum.asserts.assertStrictEquals(timesInvoked, 2);
-        Rhum.asserts.assertStrictEquals(t4, 'ateb');
-
-        const t5 = memoTestFn('brian');
-        Rhum.asserts.assertStrictEquals(timesInvoked, 2);
-        Rhum.asserts.assertStrictEquals(t5, 'ateb');
-      }
-    );
+  });
+  Rhum.testSuite("once()", () => {
+    Rhum.testCase("should only invoke provided function once", () => {
+      let counter = 0;
+      let expected: number;
+      const incr = (n: number) => {
+        counter += 1;
+        return n;
+      };
+      const onceIncr = once(incr);
+      expected = onceIncr(4);
+      Rhum.asserts.assertStrictEquals(expected, 4);
+      Rhum.asserts.assertStrictEquals(counter, 1);
+      expected = onceIncr(70);
+      Rhum.asserts.assertStrictEquals(expected, 4);
+      Rhum.asserts.assertStrictEquals(counter, 1);
+      expected = onceIncr(52830);
+      Rhum.asserts.assertStrictEquals(expected, 4);
+      Rhum.asserts.assertStrictEquals(counter, 1);
+    });
   });
 });
 
