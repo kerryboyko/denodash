@@ -4,6 +4,8 @@ import mapObject from "./objects/mapObject.ts";
 import invert from "./objects/invert.ts";
 import findKeys from "./objects/findKeys.ts";
 import get from "./objects/get.ts";
+import pick from "./objects/pick.ts";
+import omit from './objects/omit.ts';
 
 Rhum.testPlan("objects/*", () => {
   Rhum.testSuite("mapObject()", () => {
@@ -84,8 +86,74 @@ Rhum.testPlan("objects/*", () => {
       ]);
     });
     Rhum.testCase("should work with a mix of arrays and strings", () => {
-      Rhum.asserts.assertStrictEquals(get(testObj, ['a.c', 'e', 2, 'baz'], "nope"), 'quux');
-    })
+      Rhum.asserts.assertStrictEquals(
+        get(testObj, ["a.c", "e", 2, "baz"], "nope"),
+        "quux"
+      );
+    });
+  });
+  Rhum.testSuite("pick()", () => {
+    const testObj = {
+      f: "f",
+      g: "g",
+      h: "h",
+      i: "i",
+      j: 0,
+      k: false,
+    };
+    Rhum.testCase("picks values from an object", () => {
+      Rhum.asserts.assertEquals(pick(testObj, ["f", "h", "i"]), {
+        f: "f",
+        h: "h",
+        i: "i",
+      });
+    });
+    Rhum.testCase("ignores non-existant values", () => {
+      Rhum.asserts.assertEquals(pick(testObj, ["f", "h", "i", "aluminium"]), {
+        f: "f",
+        h: "h",
+        i: "i",
+      });
+    });
+    Rhum.testCase("correctly gets falsey values", () => {
+      Rhum.asserts.assertEquals(pick(testObj, ["f", "j", "k", "aluminium"]), {
+        f: "f",
+        j: 0,
+        k: false,
+      });
+    });
+  });
+  Rhum.testSuite("omit()", () => {
+    const testObj = {
+      f: "f",
+      g: "g",
+      h: "h",
+      i: "i",
+      j: 0,
+      k: false,
+    };
+    Rhum.testCase("picks values from an object", () => {
+      Rhum.asserts.assertEquals(omit(testObj, ["f", "j", "k"]), {
+        g: "g",
+        h: "h",
+        i: "i",
+      });
+    });
+    Rhum.testCase("ignores non-existant values", () => {
+      Rhum.asserts.assertEquals(omit(testObj, ["f", "j", "k", "aluminium"]), {
+        g: "g",
+        h: "h",
+        i: "i",
+      });
+    });
+    Rhum.testCase("correctly gets falsey values", () => {
+      Rhum.asserts.assertEquals(omit(testObj, ["f", "i"]), {
+        g: "g",
+        h: "h",
+        j: 0,
+        k: false,
+      });
+    });
   });
 });
 
