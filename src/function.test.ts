@@ -9,6 +9,7 @@ import defer from "./function/defer.ts";
 import memoize from "./function/memoize.ts";
 import throttle from "./function/throttle.ts";
 import once from "./function/once.ts";
+import overArgs from "./function/overArgs.ts";
 
 Rhum.testPlan("function/*", async () => {
   Rhum.testSuite("after", async () => {
@@ -381,6 +382,22 @@ Rhum.testPlan("function/*", async () => {
       Rhum.asserts.assertStrictEquals(expected, 4);
       Rhum.asserts.assertStrictEquals(counter, 1);
     });
+  });
+  Rhum.testSuite("overArgs()", () => {
+    Rhum.testCase(
+      "should Creates a function that invokes func with its arguments transformed.",
+      () => {
+        const double = (n: number): number => n * 2;
+        const square = (n: number): number => n * n;
+        const testFn = overArgs((x: number, y: number) => [x, y], [
+          square,
+          double,
+        ]);
+
+        Rhum.asserts.assertEquals(testFn(9, 3), [81, 6]);
+        Rhum.asserts.assertEquals(testFn(10, 5), [100, 10]);
+      }
+    );
   });
 });
 
