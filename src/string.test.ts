@@ -16,8 +16,6 @@ Rhum.testPlan("string/*", () => {
       Rhum.asserts.assertStrictEquals(deburr(LATIN_UNICODE), DEBURRED_LU);
     });
     Rhum.testCase("should not deburr Latin mathematical operators", () => {
-      console.log(OPERATORS);
-
       Rhum.asserts.assertEquals(OPERATORS.map(deburr), OPERATORS);
     });
     Rhum.testCase("should deburr combining diacritical marks", () => {
