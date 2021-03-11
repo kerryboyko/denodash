@@ -1,0 +1,6 @@
+# UTILS
+
+## TODO
+
+* range()
+* uniqueId()
