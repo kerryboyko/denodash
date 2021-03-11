@@ -6,6 +6,11 @@ const isEqual: Comparator<any> = (a, b) => {
   if (typeA !== typeB) {
     return false;
   }
+  /* JS says NaN !== NaN, but we want that to return true for this function. */
+  if (Number.isNaN(a)) {
+    return Number.isNaN(b);
+  }
+  
   // primatives
   if (
     [
@@ -15,7 +20,6 @@ const isEqual: Comparator<any> = (a, b) => {
       "string",
       "bigint",
       "symbol",
-      "null",
       "undefined",
       "function",
     ].includes(typeA)
@@ -36,6 +40,9 @@ const isEqual: Comparator<any> = (a, b) => {
   }
   // objects
   if (typeA === "object") {
+    if(a === null){
+      return b === null;
+    }
     const aEntries = Object.entries(a);
     const bEntries = Object.entries(b);
     return isEqual(aEntries, bEntries);
@@ -45,35 +52,4 @@ const isEqual: Comparator<any> = (a, b) => {
   );
 };
 
-// const cloneDeep = (value: any): any => {
-//   const typeofValue = typeof value;
-//   // primatives are copied by value.
-//   if (
-//     [
-//       "string",
-//       "number",
-//       "boolean",
-//       "string",
-//       "bigint",
-//       "symbol",
-//       "null",
-//       "undefined",
-//       "function",
-//     ].includes(typeofValue)
-//   ) {
-//     return value;
-//   }
-//   if (Array.isArray(value)) {
-//     return value.map(cloneDeep);
-//   }
-//   if (typeofValue === "object") {
-//     const clone: any = {};
-//     for (let prop in value) {
-//       clone[prop] = cloneDeep(value[prop]);
-//     }
-//     return clone;
-//   }
-//   throw new Error(`You've tried to clone something that can't be cloned`)
-// };
-
-// export default cloneDeep
+export default isEqual;

@@ -1,6 +1,0 @@
-# Lang
-
-## TODO
-
-* isEqual
-
