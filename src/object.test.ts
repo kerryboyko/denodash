@@ -1,13 +1,13 @@
 import { Rhum } from "../testing_deps.ts";
 
-import mapObject from "./objects/mapObject.ts";
-import invert from "./objects/invert.ts";
-import findKeys from "./objects/findKeys.ts";
-import get from "./objects/get.ts";
-import pick from "./objects/pick.ts";
-import omit from './objects/omit.ts';
+import mapObject from "./object/mapObject.ts";
+import invert from "./object/invert.ts";
+import findKeys from "./object/findKeys.ts";
+import get from "./object/get.ts";
+import pick from "./object/pick.ts";
+import omit from './object/omit.ts';
 
-Rhum.testPlan("objects/*", () => {
+Rhum.testPlan("object/*", () => {
   Rhum.testSuite("mapObject()", () => {
     Rhum.testCase("should map an object", () => {
       const testObj = {
