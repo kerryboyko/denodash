@@ -5,7 +5,7 @@ const normalHashingFunction: HashingFunction = (args: any[]): string =>
 
 export const memoize = (
   fn: Function,
-  hashingFn: HashingFunction = normalHashingFunction
+  hashingFn: HashingFunction = normalHashingFunction,
 ) => {
   const cache: Record<string, any> = {};
   return (...args: any[]) => {

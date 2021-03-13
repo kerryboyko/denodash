@@ -40,9 +40,9 @@ Rhum.testPlan("array/*", () => {
       () => {
         Rhum.asserts.assertEquals(
           partition(["beep", "boop", "foo", "bar"], [true, true, false, true]),
-          [["beep", "boop", "bar"], ["foo"]]
+          [["beep", "boop", "bar"], ["foo"]],
         );
-      }
+      },
     );
   });
   Rhum.testSuite("partitionBy()", () => {
@@ -56,9 +56,9 @@ Rhum.testPlan("array/*", () => {
             "foo",
             "bar",
           ]),
-          [["beep", "boop", "bar"], ["foo"]]
+          [["beep", "boop", "bar"], ["foo"]],
         );
-      }
+      },
     );
   });
   Rhum.testSuite("cartesianProduct()", () => {
@@ -71,7 +71,7 @@ Rhum.testPlan("array/*", () => {
           ["y", 1],
           ["y", 2],
         ]);
-      }
+      },
     );
   });
 });
@@ -193,12 +193,12 @@ Rhum.testSuite("differenceWith()", () => {
     const actual1 = differenceWith<any & { x: any }>(
       (obj1, obj2) => obj1.x === obj2.x,
       objects,
-      [{ x: 1, y: 2 }]
+      [{ x: 1, y: 2 }],
     );
     const actual2 = differenceWith<any & { y: any }>(
       (obj1, obj2) => obj1.y === obj2.y,
       objects,
-      [{ x: 3, y: 2 }]
+      [{ x: 3, y: 2 }],
     );
 
     Rhum.asserts.assertEquals(actual1, [{ x: 2, y: 1 }]);
@@ -215,9 +215,9 @@ Rhum.testSuite("dropWhile()", () => {
       const testArr = [1, 2, 3, 4, 3, 2, 1];
       Rhum.asserts.assertEquals(
         dropWhile(testArr, (x) => x < 3),
-        [3, 4, 3, 2, 1]
+        [3, 4, 3, 2, 1],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("dropWhileRight()", () => {
@@ -227,9 +227,9 @@ Rhum.testSuite("dropWhileRight()", () => {
       const testArr = [1, 2, 3, 4, 3, 2, 1];
       Rhum.asserts.assertEquals(
         dropWhileRight(testArr, (x) => x < 3),
-        [1, 2, 3, 4, 3]
+        [1, 2, 3, 4, 3],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("findLastIndex()", () => {
@@ -237,7 +237,7 @@ Rhum.testSuite("findLastIndex()", () => {
     const testArr = [1, 2, 3, 4, 3, 2, 1];
     Rhum.asserts.assertEquals(
       findLastIndex(testArr, (x: number) => x === 3),
-      4
+      4,
     );
   });
 });
@@ -270,7 +270,7 @@ Rhum.testSuite("fromPairs()", () => {
         ["b", 2],
       ];
       Rhum.asserts.assertEquals(fromPairs(testArr), { a: 1, b: 2 });
-    }
+    },
   );
 });
 Rhum.testSuite("intersection()", () => {
@@ -282,7 +282,7 @@ Rhum.testSuite("intersection()", () => {
         [2, 3],
       ];
       Rhum.asserts.assertEquals(intersection(...testArrs), [2]);
-    }
+    },
   );
 });
 Rhum.testSuite("intersectionBy()", () => {
@@ -291,7 +291,7 @@ Rhum.testSuite("intersectionBy()", () => {
     () => {
       Rhum.asserts.assertEquals(
         intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.4]),
-        [2.1]
+        [2.1],
       );
       Rhum.asserts.assertEquals(
         intersectionBy(
@@ -300,11 +300,11 @@ Rhum.testSuite("intersectionBy()", () => {
           [
             { x: 2, y: 7 },
             { x: 1, y: 35 },
-          ]
+          ],
         ),
-        [{ x: 1, y: 7 }]
+        [{ x: 1, y: 7 }],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("intersectionWith()", () => {
@@ -323,11 +323,11 @@ Rhum.testSuite("intersectionWith()", () => {
         intersectionWith(
           (a, b) => JSON.stringify(a) === JSON.stringify(b),
           objects,
-          others
+          others,
         ),
-        [{ x: 1, y: 2 }]
+        [{ x: 1, y: 2 }],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("zip()", () => {
@@ -360,7 +360,7 @@ Rhum.testSuite("shank", () => {
       ]);
       Rhum.asserts.assertEquals(namesNoBravo, ["alpha", "charlie"]);
       Rhum.asserts.assertEquals(names, ["alpha", "bravo", "charlie"]);
-    }
+    },
   );
 });
 Rhum.testSuite("union()", () => {
@@ -368,7 +368,7 @@ Rhum.testSuite("union()", () => {
     "Creates an array of unique values, in order, from all given arrays",
     () => {
       Rhum.asserts.assertEquals(union([2, 1, 3], [4, 3, 7]), [2, 1, 3, 4, 7]);
-    }
+    },
   );
 });
 Rhum.testSuite("unionBy()", () => {
@@ -387,14 +387,14 @@ Rhum.testSuite("unionBy()", () => {
             { x: 2, y: 9 },
             { x: 1, y: 30 },
             { x: 2, y: 44 },
-          ]
+          ],
         ),
         [
           { x: 1, y: 7 },
           { x: 2, y: 9 },
-        ]
+        ],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("unionWith()", () => {
@@ -413,15 +413,15 @@ Rhum.testSuite("unionWith()", () => {
         unionWith(
           (a, b) => JSON.stringify(a) === JSON.stringify(b),
           objects,
-          others
+          others,
         ),
         [
           { x: 1, y: 2 },
           { x: 2, y: 1 },
           { x: 1, y: 1 },
-        ]
+        ],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("uniq()", () => {
@@ -443,9 +443,9 @@ Rhum.testSuite("uniqBy()", () => {
           { x: 2 },
           { x: 1 },
         ]),
-        [{ x: 1 }, { x: 2 }]
+        [{ x: 1 }, { x: 2 }],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("uniqWith()", () => {
@@ -459,14 +459,14 @@ Rhum.testSuite("uniqWith()", () => {
             { x: 1, y: 2 },
             { x: 2, y: 1 },
             { x: 1, y: 2 },
-          ]
+          ],
         ),
         [
           { x: 1, y: 2 },
           { x: 2, y: 1 },
-        ]
+        ],
       );
-    }
+    },
   );
 });
 Rhum.testSuite("unzip()", () => {
@@ -480,7 +480,7 @@ Rhum.testSuite("unzip()", () => {
         ["a", "b"],
         [1, 2],
         [true, false],
-      ]
+      ],
     );
   });
 });

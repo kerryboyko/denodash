@@ -2,7 +2,7 @@ import type { ValueOrArray } from "../types/ValueOrArray.d.ts";
 
 const simpleGet = (
   obj: Record<string | number, any> | undefined,
-  path: Array<string | number>
+  path: Array<string | number>,
 ): any => {
   let cursor = obj;
 
@@ -16,7 +16,7 @@ const simpleGet = (
 };
 
 const parsePath = (
-  path: ValueOrArray<string | number> | string
+  path: ValueOrArray<string | number> | string,
 ): Array<string | number> => {
   if (typeof path === "string") {
     path = path.split(".") as ValueOrArray<string | number>;
@@ -41,7 +41,7 @@ const parsePath = (
 export const get = (
   obj: Record<string | number, any>,
   path: string | Array<string | number>,
-  retValueIfUndef?: any
+  retValueIfUndef?: any,
 ): any => {
   const result: any = simpleGet(obj, parsePath(path));
   if (result === undefined) {

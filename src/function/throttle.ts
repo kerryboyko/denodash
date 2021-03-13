@@ -6,7 +6,7 @@ interface ThrottleOptions {
 export const throttle = (
   func: Function,
   wait = 0,
-  options: ThrottleOptions = { leading: true, trailing: true }
+  options: ThrottleOptions = { leading: true, trailing: true },
 ) => {
   let timeout: ReturnType<typeof setTimeout>;
   let result: any;
@@ -17,16 +17,16 @@ export const throttle = (
     previous = options.leading === false ? 0 : Date.now();
     timeout = 0;
     result = func(...args);
-    if(!timeout){
+    if (!timeout) {
       args = [];
     }
   };
 
   const throttled = (...currentArgs: any[]) => {
     const now = Date.now();
-    if (!previous && options.leading === false){
+    if (!previous && options.leading === false) {
       previous = now;
-    } 
+    }
     let remaining = wait - (now - previous);
     args = currentArgs;
     if (remaining <= 0 || remaining > wait) {
@@ -37,7 +37,7 @@ export const throttle = (
       previous = now;
       result = func(...currentArgs);
       if (!timeout) {
-        args = []; 
+        args = [];
       }
     } else if (!timeout && options.trailing !== false) {
       timeout = setTimeout(later, remaining);
@@ -54,6 +54,5 @@ export const throttle = (
 
   return throttled;
 };
-
 
 export default throttle;

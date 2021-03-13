@@ -1,4 +1,4 @@
-import flattenDepth from './flattenDepth.ts';
+import flattenDepth from "./flattenDepth.ts";
 
 export const flatten = (arr: any[]) => flattenDepth(arr, 1);
 

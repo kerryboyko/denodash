@@ -5,7 +5,7 @@ import { Iteratee } from "../types/Iteratee.d.ts";
 export const flatMapDepth = <T, U>(
   iteratee: Iteratee<T, U>,
   arr: T[],
-  depth: number = Number.MAX_SAFE_INTEGER
+  depth: number = Number.MAX_SAFE_INTEGER,
 ): U[] => flattenDepth(arr.map(iteratee), depth);
 
 export default flatMapDepth;

@@ -124,7 +124,7 @@ Rhum.testPlan("lang/*", () => {
 
       Rhum.asserts.assertStrictEquals(isEqual(obj1, obj2), false);
 
-      obj2 = {...obj1, 'newPropThatDoesntExistOnObj1': 'sf'}
+      obj2 = { ...obj1, "newPropThatDoesntExistOnObj1": "sf" };
 
       Rhum.asserts.assertStrictEquals(isEqual(obj1, obj2), false);
     });

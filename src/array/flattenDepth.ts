@@ -1,4 +1,3 @@
-
 export const flattenDepth = (arr: any[], level = 1, currLevel = 1) => {
   const clone = arr.slice();
   if (level === 0) {
@@ -10,7 +9,7 @@ export const flattenDepth = (arr: any[], level = 1, currLevel = 1) => {
     output = output.concat(
       Array.isArray(elem) && currLevel < level
         ? flattenDepth(elem, level, currLevel + 1)
-        : elem
+        : elem,
     );
   }
   return output;

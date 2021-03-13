@@ -1,6 +1,6 @@
 export const partitionBy = <T>(
   fn: (val: T, i: number) => boolean,
-  arr: T[]
+  arr: T[],
 ) => {
   const trueArray: T[] = [];
   const falseArray: T[] = [];

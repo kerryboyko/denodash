@@ -26,7 +26,7 @@ const cloneDeep = (value: any): any => {
     }
     return clone;
   }
-  throw new Error(`You've tried to clone something that can't be cloned`)
+  throw new Error(`You've tried to clone something that can't be cloned`);
 };
 
 export default cloneDeep;

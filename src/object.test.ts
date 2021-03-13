@@ -5,7 +5,7 @@ import invert from "./object/invert.ts";
 import findKeys from "./object/findKeys.ts";
 import get from "./object/get.ts";
 import pick from "./object/pick.ts";
-import omit from './object/omit.ts';
+import omit from "./object/omit.ts";
 
 Rhum.testPlan("object/*", () => {
   Rhum.testSuite("mapObject()", () => {
@@ -15,8 +15,9 @@ Rhum.testPlan("object/*", () => {
         two: 2,
         three: 3,
       };
-      const returned = mapObject<number, string>(testObj, (n: number): string =>
-        (n * n * 100).toString()
+      const returned = mapObject<number, string>(
+        testObj,
+        (n: number): string => (n * n * 100).toString(),
       );
       Rhum.asserts.assertEquals(returned, {
         one: "100",
@@ -29,7 +30,7 @@ Rhum.testPlan("object/*", () => {
     Rhum.testCase("should invert an objects keys and values", () => {
       Rhum.asserts.assertEquals(
         invert({ Moe: "Moses", Larry: "Louis", Curly: "Jerome" }),
-        { Moses: "Moe", Louis: "Larry", Jerome: "Curly" }
+        { Moses: "Moe", Louis: "Larry", Jerome: "Curly" },
       );
     });
   });
@@ -37,11 +38,11 @@ Rhum.testPlan("object/*", () => {
     Rhum.testCase("should find all keys where the value holds true", () => {
       Rhum.asserts.assertEquals(
         findKeys({ a: 1, b: 2, c: 3 }, (x: number) => x % 2 === 1),
-        ["a", "c"]
+        ["a", "c"],
       );
       Rhum.asserts.assertEquals(
         findKeys({ c: 1, b: 2, a: 3 }, (x: number) => x % 2 === 1),
-        ["a", "c"]
+        ["a", "c"],
       );
     });
   });
@@ -59,7 +60,7 @@ Rhum.testPlan("object/*", () => {
     Rhum.testCase("should get objects by a path", () => {
       Rhum.asserts.assertStrictEquals(
         get(testObj, ["a", "c", "e", 2, "baz"], "nope"),
-        "quux"
+        "quux",
       );
     });
     Rhum.testCase("should return whole objects", () => {
@@ -71,11 +72,11 @@ Rhum.testPlan("object/*", () => {
     Rhum.testCase("should a default if path does not exist", () => {
       Rhum.asserts.assertStrictEquals(
         get(testObj, ["a", "q", "c"], "nope"),
-        "nope"
+        "nope",
       );
       Rhum.asserts.assertStrictEquals(
         get(testObj, ["a", "b", "c"], "nope"),
-        "nope"
+        "nope",
       );
     });
     Rhum.testCase("should work with strings", () => {
@@ -88,7 +89,7 @@ Rhum.testPlan("object/*", () => {
     Rhum.testCase("should work with a mix of arrays and strings", () => {
       Rhum.asserts.assertStrictEquals(
         get(testObj, ["a.c", "e", 2, "baz"], "nope"),
-        "quux"
+        "quux",
       );
     });
   });

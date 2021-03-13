@@ -25,7 +25,7 @@ Rhum.testPlan("function/*", async () => {
           logAfterThree(i);
         }
         Rhum.asserts.assertEquals(log, [2, 3, 4, 5, 6, 7, 8, 9]);
-      }
+      },
     );
   });
   Rhum.testSuite("before()", async () => {
@@ -41,7 +41,7 @@ Rhum.testPlan("function/*", async () => {
           logAfterThree(i);
         }
         Rhum.asserts.assertEquals(log, [2, 3, 4, 5, 6, 7, 8, 9]);
-      }
+      },
     );
   });
 
@@ -58,7 +58,7 @@ Rhum.testPlan("function/*", async () => {
       Rhum.asserts.assertStrictEquals(
         counter,
         1,
-        "incr was called immediately"
+        "incr was called immediately",
       );
       await delay(64);
       Rhum.asserts.assertStrictEquals(counter, 2);
@@ -90,7 +90,7 @@ Rhum.testPlan("function/*", async () => {
       Rhum.asserts.assertStrictEquals(
         result,
         1,
-        "throttled functions return their value"
+        "throttled functions return their value",
       );
       Rhum.asserts.assertStrictEquals(counter, 1);
     });
@@ -155,7 +155,7 @@ Rhum.testPlan("function/*", async () => {
 
         await delay(96);
         Rhum.asserts.assertEquals(true, counter > lastCount);
-      }
+      },
     );
 
     Rhum.testCase(
@@ -173,7 +173,7 @@ Rhum.testPlan("function/*", async () => {
 
         await delay(96);
         Rhum.asserts.assertStrictEquals(counter, 1);
-      }
+      },
     );
 
     Rhum.testCase(
@@ -198,7 +198,7 @@ Rhum.testPlan("function/*", async () => {
 
         await delay(100);
         Rhum.asserts.assertStrictEquals(counter, 2);
-      }
+      },
     );
 
     Rhum.testCase("one more throttle with leading: false test", async () => {
@@ -241,7 +241,7 @@ Rhum.testPlan("function/*", async () => {
 
         await delay(96);
         Rhum.asserts.assertStrictEquals(counter, 2);
-      }
+      },
     );
   });
   Rhum.testSuite("debounce()", () => {
@@ -292,7 +292,7 @@ Rhum.testPlan("function/*", async () => {
         Rhum.asserts.assertStrictEquals(expected, 3);
         expected = beforeIncr();
         Rhum.asserts.assertStrictEquals(expected, 3);
-      }
+      },
     );
   });
   Rhum.testSuite("memoize()", () => {
@@ -360,7 +360,7 @@ Rhum.testPlan("function/*", async () => {
         }, true);
         await delay(50);
         Rhum.asserts.assertStrictEquals(deferred, true);
-      }
+      },
     );
   });
   Rhum.testSuite("once()", () => {
@@ -390,11 +390,11 @@ Rhum.testPlan("function/*", async () => {
 
       Rhum.asserts.assertEquals(
         overArgs((x: number, y: number) => [x, y], [square, double], 9, 3),
-        [81, 6]
+        [81, 6],
       );
       Rhum.asserts.assertEquals(
         overArgs((x: number, y: number) => [x, y], [square, double], 10, 5),
-        [100, 10]
+        [100, 10],
       );
     });
   });

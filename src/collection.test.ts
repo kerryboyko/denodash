@@ -23,13 +23,13 @@ Rhum.testPlan("collection/*", () => {
         });
         Rhum.asserts.assertEquals(
           countBy((elem: string) => elem.length, ["one", "two", "three"]),
-          { "3": 2, "5": 1 }
+          { "3": 2, "5": 1 },
         );
         Rhum.asserts.assertEquals(
           countBy(identity, ["foo", "bar", "foo", "bar", "foo", "baz"]),
-          { bar: 2, baz: 1, foo: 3 }
+          { bar: 2, baz: 1, foo: 3 },
         );
-      }
+      },
     );
   });
   Rhum.testSuite("count()", () => {
@@ -38,16 +38,16 @@ Rhum.testPlan("collection/*", () => {
       () => {
         Rhum.asserts.assertEquals(
           count(["foo", "bar", "foo", "bar", "foo", "baz"]),
-          { bar: 2, baz: 1, foo: 3 }
+          { bar: 2, baz: 1, foo: 3 },
         );
-      }
+      },
     );
   });
   Rhum.testSuite("flatMapDeep()", () => {
     Rhum.testCase("should created a deeply flattened flatmap", () => {
       Rhum.asserts.assertEquals(
         flatMapDeep((x: number) => [[x * 2]], [1, 2, 3, 4]),
-        [2, 4, 6, 8]
+        [2, 4, 6, 8],
       );
     });
   });
@@ -60,9 +60,9 @@ Rhum.testPlan("collection/*", () => {
           [
             [1, 1],
             [2, 2],
-          ]
+          ],
         );
-      }
+      },
     );
   });
   Rhum.testSuite("groupBy()", () => {
@@ -84,9 +84,9 @@ Rhum.testPlan("collection/*", () => {
           {
             even: [2, 4],
             odd: [1, 3, 5],
-          }
+          },
         );
-      }
+      },
     );
   });
   Rhum.testSuite("keyBy()", () => {
@@ -106,13 +106,13 @@ Rhum.testPlan("collection/*", () => {
           {
             a: { dir: "left", code: 97 },
             d: { dir: "right", code: 100 },
-          }
+          },
         );
         Rhum.asserts.assertEquals(keyBy("dir", testArray), {
           left: { dir: "left", code: 97 },
           right: { dir: "right", code: 100 },
         });
-      }
+      },
     );
   });
   Rhum.testSuite("sortBy()", () => {
@@ -130,29 +130,29 @@ Rhum.testPlan("collection/*", () => {
           sortBy(
             testArray,
             (a: TestType, b: TestType): number => a.user.localeCompare(b.user),
-            (a: TestType, b: TestType): number => a.age - b.age
+            (a: TestType, b: TestType): number => a.age - b.age,
           ),
           [
             { user: "barney", age: 34 },
             { user: "barney", age: 36 },
             { user: "fred", age: 40 },
             { user: "fred", age: 48 },
-          ]
+          ],
         );
         Rhum.asserts.assertEquals(
           sortBy(
             testArray,
             (a: TestType, b: TestType): number => a.user.localeCompare(b.user),
-            (a: TestType, b: TestType): number => b.age - a.age
+            (a: TestType, b: TestType): number => b.age - a.age,
           ),
           [
             { user: "barney", age: 36 },
             { user: "barney", age: 34 },
             { user: "fred", age: 48 },
             { user: "fred", age: 40 },
-          ]
+          ],
         );
-      }
+      },
     );
   });
   Rhum.testSuite("sample()", () => {

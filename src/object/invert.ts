@@ -19,12 +19,14 @@ export const invert = (obj: Record<string, any>) =>
   Object.entries(obj).reduce(
     (pv: Record<string, string>, [k, v]: [string, any]) => ({
       ...pv,
-      [stringifyKey(
-        v,
-        `Value of property ${k} is not serializable to string`
-      )]: k,
+      [
+        stringifyKey(
+          v,
+          `Value of property ${k} is not serializable to string`,
+        )
+      ]: k,
     }),
-    {}
+    {},
   );
 
 export default invert;

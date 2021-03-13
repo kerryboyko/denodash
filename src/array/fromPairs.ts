@@ -1,5 +1,5 @@
 export const fromPairs = <K extends string | number | symbol, T>(
-  arr: Array<any[]>
+  arr: Array<any[]>,
 ): Record<K, T> => {
   const record: Record<K, T> = {} as Record<K, T>;
   for (const tuple of arr) {

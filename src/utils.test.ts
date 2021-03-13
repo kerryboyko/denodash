@@ -25,8 +25,8 @@ Rhum.testPlan("utils/*", () => {
         testArr.sort(
           comparatorChain(
             (a: NameAge, b: NameAge) => a.age - b.age,
-            (a: NameAge, b: NameAge) => a.name.localeCompare(b.name)
-          )
+            (a: NameAge, b: NameAge) => a.name.localeCompare(b.name),
+          ),
         ),
         [
           {
@@ -41,7 +41,7 @@ Rhum.testPlan("utils/*", () => {
             age: 25,
             name: "carl",
           },
-        ]
+        ],
       );
     });
   });

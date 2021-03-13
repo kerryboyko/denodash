@@ -10,7 +10,7 @@ const isEqual: Comparator<any> = (a, b) => {
   if (Number.isNaN(a)) {
     return Number.isNaN(b);
   }
-  
+
   // primatives
   if (
     [
@@ -40,7 +40,7 @@ const isEqual: Comparator<any> = (a, b) => {
   }
   // objects
   if (typeA === "object") {
-    if(a === null){
+    if (a === null) {
       return b === null;
     }
     const aEntries = Object.entries(a);
@@ -48,7 +48,7 @@ const isEqual: Comparator<any> = (a, b) => {
     return isEqual(aEntries, bEntries);
   }
   throw new Error(
-    `You've tried running isEqual on something isEqual isn't meant for`
+    `You've tried running isEqual on something isEqual isn't meant for`,
   );
 };
 
