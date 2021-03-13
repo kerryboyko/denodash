@@ -45,12 +45,12 @@ Rhum.testPlan("array/*", () => {
       }
     );
   });
-  Rhum.testSuite("partitionBy()()", () => {
+  Rhum.testSuite("partitionBy()", () => {
     Rhum.testCase(
       "Should split values into two groups based on a given filter function",
       () => {
         Rhum.asserts.assertEquals(
-          partitionBy((x: string) => x.charAt(0) === "b")([
+          partitionBy((x: string) => x.charAt(0) === "b", [
             "beep",
             "boop",
             "foo",
@@ -175,15 +175,15 @@ Rhum.testSuite("difference()", () => {
     Rhum.asserts.assertEquals(difference(a, b), [1]);
   });
 });
-Rhum.testSuite("differenceBy()()", () => {
+Rhum.testSuite("differenceBy()", () => {
   Rhum.testCase("accepts an iteratee", () => {
     const a = [0.3, 1.7, 6.2, 3.2];
     const b = [0.5, 2.1, 6.8];
-    Rhum.asserts.assertEquals(differenceBy(Math.floor)(a, b), [1.7, 3.2]);
+    Rhum.asserts.assertEquals(differenceBy(Math.floor, a, b), [1.7, 3.2]);
   });
 });
 
-Rhum.testSuite("differenceWith()()", () => {
+Rhum.testSuite("differenceWith()", () => {
   Rhum.testCase("should work with a comparator", () => {
     const objects = [
       { x: 1, y: 2 },
@@ -191,11 +191,15 @@ Rhum.testSuite("differenceWith()()", () => {
       { x: 2, y: 1 },
     ];
     const actual1 = differenceWith<any & { x: any }>(
-      (obj1, obj2) => obj1.x === obj2.x
-    )(objects, [{ x: 1, y: 2 }]);
+      (obj1, obj2) => obj1.x === obj2.x,
+      objects,
+      [{ x: 1, y: 2 }]
+    );
     const actual2 = differenceWith<any & { y: any }>(
-      (obj1, obj2) => obj1.y === obj2.y
-    )(objects, [{ x: 3, y: 2 }]);
+      (obj1, obj2) => obj1.y === obj2.y,
+      objects,
+      [{ x: 3, y: 2 }]
+    );
 
     Rhum.asserts.assertEquals(actual1, [{ x: 2, y: 1 }]);
     Rhum.asserts.assertEquals(actual2, [
@@ -281,16 +285,17 @@ Rhum.testSuite("intersection()", () => {
     }
   );
 });
-Rhum.testSuite("intersectionBy()()", () => {
+Rhum.testSuite("intersectionBy()", () => {
   Rhum.testCase(
     "Creates an array of unique values that are included in all given arrays given an iterator",
     () => {
       Rhum.asserts.assertEquals(
-        intersectionBy(Math.floor)([2.1, 1.2], [2.3, 3.4]),
+        intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.4]),
         [2.1]
       );
       Rhum.asserts.assertEquals(
-        intersectionBy((obj: any) => obj["x"])(
+        intersectionBy(
+          (obj: any) => obj["x"],
           [{ x: 1, y: 7 }],
           [
             { x: 2, y: 7 },
@@ -301,18 +306,8 @@ Rhum.testSuite("intersectionBy()()", () => {
       );
     }
   );
-  Rhum.testCase("Works when curried", () => {
-    const arr1 = [2.1, 1.2];
-    const arr2 = [2.3, 3.2];
-    const intersectionByFloor = intersectionBy(Math.floor);
-    const intersectionByDecimal = intersectionBy(
-      (x: number) => Math.round((x * 10) - (Math.floor(x) * 10))
-    );
-    Rhum.asserts.assertEquals(intersectionByFloor(arr1, arr2), [2.1]);
-    Rhum.asserts.assertEquals(intersectionByDecimal(arr1, arr2), [1.2]);
-  });
 });
-Rhum.testSuite("intersectionWith()()", () => {
+Rhum.testSuite("intersectionWith()", () => {
   Rhum.testCase(
     "Creates an array of unique values that are included in all given arrays given an comparator",
     () => {
@@ -325,7 +320,8 @@ Rhum.testSuite("intersectionWith()()", () => {
         { x: 1, y: 2 },
       ];
       Rhum.asserts.assertEquals(
-        intersectionWith((a, b) => JSON.stringify(a) === JSON.stringify(b))(
+        intersectionWith(
+          (a, b) => JSON.stringify(a) === JSON.stringify(b),
           objects,
           others
         ),
@@ -375,16 +371,17 @@ Rhum.testSuite("union()", () => {
     }
   );
 });
-Rhum.testSuite("unionBy()()", () => {
+Rhum.testSuite("unionBy()", () => {
   Rhum.testCase(
     "Creates an array of unique values, in order, from all given arrays, given an iteratee",
     () => {
-      Rhum.asserts.assertEquals(unionBy(Math.floor)([2.1], [1.2, 2.3]), [
+      Rhum.asserts.assertEquals(unionBy(Math.floor, [2.1], [1.2, 2.3]), [
         2.1,
         1.2,
       ]);
       Rhum.asserts.assertEquals(
-        unionBy((elem: any & { x: number }) => elem["x"])(
+        unionBy(
+          (elem: any & { x: number }) => elem["x"],
           [{ x: 1, y: 7 }],
           [
             { x: 2, y: 9 },
@@ -400,7 +397,7 @@ Rhum.testSuite("unionBy()()", () => {
     }
   );
 });
-Rhum.testSuite("unionWith()()", () => {
+Rhum.testSuite("unionWith()", () => {
   Rhum.testCase(
     "Creates an array of unique values, in order, from all given arrays, given a comparator",
     () => {
@@ -413,7 +410,8 @@ Rhum.testSuite("unionWith()()", () => {
         { x: 1, y: 2 },
       ];
       Rhum.asserts.assertEquals(
-        unionWith((a, b) => JSON.stringify(a) === JSON.stringify(b))(
+        unionWith(
+          (a, b) => JSON.stringify(a) === JSON.stringify(b),
           objects,
           others
         ),
@@ -431,16 +429,16 @@ Rhum.testSuite("uniq()", () => {
     Rhum.asserts.assertEquals(uniq([1, 2, 1]), [1, 2]);
   });
 });
-Rhum.testSuite("uniqBy()()", () => {
+Rhum.testSuite("uniqBy()", () => {
   Rhum.testCase(
     "Creates a duplicate-free version of an array, accepting an iterator",
     () => {
-      Rhum.asserts.assertEquals(uniqBy(Math.floor)([2.1, 1.2, 2.3]), [
+      Rhum.asserts.assertEquals(uniqBy(Math.floor, [2.1, 1.2, 2.3]), [
         2.1,
         1.2,
       ]);
       Rhum.asserts.assertEquals(
-        uniqBy((elem: Object & { x: number }) => elem["x"])([
+        uniqBy((elem: Object & { x: number }) => elem["x"], [
           { x: 1 },
           { x: 2 },
           { x: 1 },
@@ -450,18 +448,19 @@ Rhum.testSuite("uniqBy()()", () => {
     }
   );
 });
-Rhum.testSuite("uniqWith()()", () => {
+Rhum.testSuite("uniqWith()", () => {
   Rhum.testCase(
     "Creates a duplicate-free version of an array, accepting a comparator",
     () => {
       Rhum.asserts.assertEquals(
         uniqWith(
-          (a: any, b: any): boolean => JSON.stringify(a) === JSON.stringify(b)
-        )([
-          { x: 1, y: 2 },
-          { x: 2, y: 1 },
-          { x: 1, y: 2 },
-        ]),
+          (a: any, b: any): boolean => JSON.stringify(a) === JSON.stringify(b),
+          [
+            { x: 1, y: 2 },
+            { x: 2, y: 1 },
+            { x: 1, y: 2 },
+          ]
+        ),
         [
           { x: 1, y: 2 },
           { x: 2, y: 1 },

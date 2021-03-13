@@ -1,6 +1,6 @@
 import type { Comparator } from "../types/Comparator.d.ts";
 
-const intersectionWith = <T>(comparator: Comparator<T>) => (
+const intersectionWith = <T>(comparator: Comparator<T>, 
   ...arrays: T[][]
 ): T[] => {
   const baseArray = arrays[0];

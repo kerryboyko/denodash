@@ -15,7 +15,7 @@ Instead of importing Lodash into the new Deno ecosystem, I thought it was a good
 * Only provide what is missing from the core. Functions that can be trivially implmented or are already part of the prototype should be omitted; conversely, helpful utilities not available in other libraries might have a home here. 
 * Practically Functional. While mutation *within* the utility function is allowed, no utility function should *ever* mutate a parameter passed to it, returning only new variables. These functions will never change your inputs.  
 * Utility Types as well as utility functions - some function and object constructions are common enough that they can be implemented as named types. Comparator, Iteratee, Predicate, etc. These types are provided to extend the functionality of Typescript's already good library of utility types (Partial, Required, et. al)
-### Notable Changes: The use of curries for composition
+### From Curries to UnCurries.
 
 A pattern that I found in Lodash was often that the library offered many functions ending with the suffix "-by" or "-with" that took a function as the last parameter, iterating over the arguments provided until it hit a function.  This made a lot of sense in the days before spread operators, but it seemed to me that it would be better to put the function first... or *even better*, create a curried function. 
 
@@ -37,21 +37,15 @@ intersectionBy(Math.floor)([2.1, 1.2], [2.3, 3.2])
 // => [2.1]
 ```
 
+However, it was pointed out that while currying is a great way to organize your code in functional programming style, for a *utility library*, adding the extra closure comes with a performance hit. 
+
+This is why it's on the to-do list to refactor those ideas into a regular function, with the first parameter (rather than the last) being the function. 
 This has the added advantage of being able to define different functions for reuse in your code. 
 
 ```typescript
-const arr1 = [2.1, 1.2];
-const arr2 = [2.3, 3.2];
-const intersectionByFloor = intersectionBy(Math.floor);
-const intersectionByDecimal = intersectionBy(
-  (x: number) => Math.round((x * 10) - (Math.floor(x) * 10))
-);
-intersectionByFloor(arr1, arr2); // => [2.1];
-intersectionByDecimal(arr1, arr2); // => [1.2];
+// PROPOSED:
+intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.2])
 ```
-
-All in all, the currying syntax was chosen in these cases primarily to provide code reuse - instead of having seperate "intersection" and "intersectionBy" functions, we can simply define "intersection" as the result of intersectionBy when passed an identity function (x => x); 
-
 ## Current High Priority Needs:
 ### Debounce & Throttle
 
@@ -135,6 +129,10 @@ It can be difficult to test Debounce and Throttle, and I'm not 100% sure I got t
   * randomOf
 
 ### Roadmap
+
+Refactor:
+
+Refactor curried functions into regular functions. 
 
 These methods are likely next to be implemented
 
