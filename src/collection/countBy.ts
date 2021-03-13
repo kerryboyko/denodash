@@ -1,6 +1,6 @@
 import type { Iteratee } from "../types/Iteratee.d.ts";
 
-export const countBy = <T>(iteratee: Iteratee<T, any>) => (
+export const countBy = <T>(iteratee: Iteratee<T, any>, 
   arr: T[]
 ): Record<string, number> => {
   const output: Record<string, number> = {};

@@ -1,8 +1,11 @@
 import type { SortComparator } from "../types/SortComparator.d.ts";
 import comparatorChain from "../utils/comparatorChain.ts";
-import mergeSort from "../utils/mergeSort.ts";
 
-export const sortBy = <T>(...comparators: SortComparator<T>[]) => (array: T[]): T[] =>
-  mergeSort(comparatorChain<T>(...comparators))(array);
-
+export const sortBy = <T>(
+  array: T[],
+  ...comparators: SortComparator<T>[]
+): T[] => {
+  const chain = comparatorChain<T>(...comparators);
+  return array.slice().sort((a, b) => chain(a, b));
+};
 export default sortBy;

@@ -384,20 +384,19 @@ Rhum.testPlan("function/*", async () => {
     });
   });
   Rhum.testSuite("overArgs()", () => {
-    Rhum.testCase(
-      "should Creates a function that invokes func with its arguments transformed.",
-      () => {
-        const double = (n: number): number => n * 2;
-        const square = (n: number): number => n * n;
-        const testFn = overArgs((x: number, y: number) => [x, y], [
-          square,
-          double,
-        ]);
+    Rhum.testCase("invokes func with its arguments transformed.", () => {
+      const double = (n: number): number => n * 2;
+      const square = (n: number): number => n * n;
 
-        Rhum.asserts.assertEquals(testFn(9, 3), [81, 6]);
-        Rhum.asserts.assertEquals(testFn(10, 5), [100, 10]);
-      }
-    );
+      Rhum.asserts.assertEquals(
+        overArgs((x: number, y: number) => [x, y], [square, double], 9, 3),
+        [81, 6]
+      );
+      Rhum.asserts.assertEquals(
+        overArgs((x: number, y: number) => [x, y], [square, double], 10, 5),
+        [100, 10]
+      );
+    });
   });
 });
 

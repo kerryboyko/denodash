@@ -1,6 +1,6 @@
 import type { Iteratee } from "../types/Iteratee.d.ts";
 
-export const groupBy = <T>(iteratee: Iteratee<T, any>) => (
+export const groupBy = <T>(iteratee: Iteratee<T, any>, 
   arr: T[]
 ): Record<string, T[]> => {
   const output: Record<string, Array<T>> = {};
