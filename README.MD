@@ -1,52 +1,26 @@
-# DenoDash
-
+# denodash
 ## A Typescript-First utility library for Deno
-
 ### Why yet another utility library?
 
-I'll be honest, I _love_ Lodash in my node projects. Even though I could
-implment many of the features myself, it's just convenient to have it all in a
-simple package that is pretty standard. But it's not without it's flaws,
-especially when going from Node to Deno.
+I'll be honest, I _love_ Lodash in my node projects. Even though I could implement many of the features myself, it's just convenient to have it all in a simple package that is pretty standard. But it's not without it's flaws, especially when going from Node to Deno.
 
-Lodash was designed in a EMCA 3 kind of world, where things such as "filter" and
-"slice" were not yet part of the official Javascript prototype. Moving forward,
-there are a lot of utilities that a utility library can omit. Do we really need
-_.last when we can just write arr[arr.length - 1]? Or _.compact when we can just
-write arr.filter(x => !!x)?
+Lodash was designed in a EMCA 3 kind of world, where things such as "filter" and "slice" were not yet part of the official Javascript prototype. Moving forward, there are a lot of utilities that a utility library can omit. Do we really need _.last when we can just write arr[arr.length - 1]? Or _.compact when we can just write arr.filter(x => !!x)?
 
-Instead of importing Lodash into the new Deno ecosystem, I thought it was a good
-idea to write a new utility library - one designed from the ground up to work in
-the deno paradigm. That means typescript (with generics where possible) and
-stand-alone modules.
+Instead of importing Lodash into the new Deno ecosystem, I thought it was a good idea to write a new utility library - one designed from the ground up to work in the deno paradigm. That means typescript (with generics where possible) and stand-alone modules.
 
+Sure, this project will require a lot of work before it's ready for production, but in March 2021 (when this project is started), so does Deno. Part of that work is writing the libraries we take for granted in the node ecosystem the Deno way. 
 ## Goals of the project
 
-- Every function can be imported independently, meaning that you don't need to
-  download the whole package for one utility. Just need "get"? Just get "get"!
-- Full Typescript Support including generics. While generics are an advanced
-  Typescript topic, the use of generics in a utility library will help with
-  typechecking going forward and prevent nasty errors.
-- Only provide what is missing from the core. Functions that can be trivially
-  implmented or are already part of the prototype should be omitted; conversely,
-  helpful utilities not available in other libraries might have a home here.
-- Practically Functional. While mutation _within_ the utility function is
-  allowed, no utility function should _ever_ mutate a parameter passed to it,
-  returning only new variables. These functions will never change your inputs.
-- Utility Types as well as utility functions - some function and object
-  constructions are common enough that they can be implemented as named types.
-  Comparator, Iteratee, Predicate, etc. These types are provided to extend the
-  functionality of Typescript's already good library of utility types (Partial,
-  Required, et. al)
-
+- Every function can be imported independently, meaning that you don't need to   download the whole package for one utility. Just need "get"? Just get "get"!
+- Full Typescript Support including generics. While generics are an advanced   Typescript topic, the use of generics in a utility library will help with typechecking going forward and prevent nasty errors.
+- Only provide what is missing from the core. Functions that can be trivially implmented or are already part of the prototype should be omitted; conversely, helpful utilities not available in other libraries might have a home here.
+- Practically Functional. While mutation _within_ the utility function is allowed, no utility function should _ever_ mutate a parameter passed to it, returning only new variables. These functions will never change your inputs.
+- Utility Types as well as utility functions - some function and object constructions are common enough that they can be implemented as named types. Comparator, Iteratee, Predicate, etc. These types are provided to extend the functionality of Typescript's already good library of utility types (Partial, Required, et. al)
 ### Changing the order
 
-A pattern that I found in Lodash was often that the library offered many
-functions ending with the suffix "-by" or "-with" that took a function as the
-_last_ parameter, iterating over the arguments provided until it hit a function.
-This made a lot of sense in the days before spread operators, but it seemed to
-me that it would be better to put the function first... or _even better_, create
-a curried function.
+A pattern that I found in Lodash was often that the library offered many functions ending with the suffix "-by" or "-with" that took a function as the _last_ parameter, iterating over the arguments provided until it hit a function.
+
+This made a lot of sense in the days before spread operators, but it seemed to me that it would be better to put the function first, - first, to aid in currying, second, so that we can take advantage of the spread operator. 
 
 For example, lodash's "intersectionBy" has the following syntax and examples:
 
@@ -60,9 +34,15 @@ To me, it seemed like a better way to handle this would be:
 
 ```typescript
 // const intersectionBy = <T>(fn: Iteratee<T, any>) => (...arrays: T[][]): T[]
-// or without the generics:
-// intersectionBy = (fn: Function) => (...arrays: Array<Array<any>>) => Array<any>)
 intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.2]);
+// => [2.1]
+```
+
+This allows the end-user to take advantage of currying in their project:
+
+```typescript
+const intersectionByFloor = <T>(...arrays: T[][]) => intersectionBy<T>(Math.floor, ...arrays);
+intersectionByFloor([2.1, 1.2], [2.3, 3.2]);
 // => [2.1]
 ```
 
@@ -71,14 +51,19 @@ inefficiency of closures in V8 makes a simple function the way to go for now.
 
 ## Current High Priority Needs:
 
+### Documentation
+
+In the rush to version 0.0.1, documentation was left by the wayside. I'm starting up a gh-pages branch to add documentation to github pages. 
+
+### Efficiency Testing
+
+While all the functions work and are tested, they may not be the most efficient functions on the planet. An insane amount of time and effort has gone into making lodash computationally efficient; while we don't need to match lodash for speed, we should optimize where possible.
 ### Debounce & Throttle
 
 It can be difficult to test Debounce and Throttle, and I'm not 100% sure I got
 the implementation right. I'd like another pair of eyes on it if it's possible,
 and some more tests.
-
 ## Methods:
-
 ### Currently Supported:
 
 - array
@@ -456,8 +441,8 @@ these methods is needed, please create an issue.
 
 Right now, this is a solo project of Brian Boyko, but this is being opened up to
 contributions.
-
 ## Changelog
 
-This is still in pre-alpha, with fuller documentation and publishing to
-deno.land to come.
+* 0.0.1 pre-alpha
+  * Publish to deno.land
+  * First version 
