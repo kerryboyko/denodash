@@ -1,0 +1,11 @@
+---
+layout: documentation
+name: cartesianProduct.ts
+invocation: <T, U>(a: Array<T>, b: Array<U>)
+returns: Array<[T, U]>
+description: Calculates the cartesian product (that is, all combinations) of two arrays.
+examples: 
+   cartesianProduct(["x", "y"], [1, 2])
+   // => [["x", 1], ["x", 2], ["y", 1], ["y", 2]];
+sourcecode: {% include_relative ../src/array/cartesianProduct.ts %}
+---

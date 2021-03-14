@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<h2>{{page.name}}</h2>
+<h3>Invocation: {{page.invocation}}</h3>
+<h3>Returns: {{page.returns}}</h3>
+
+<p>{{page.description}}</p>
+<h4>Examples</h4>
+{% highlight typescript %}
+  {{page.examples}}
+{% endhighlight %}
+
+<h4>Source Code</h4>
+{% highlight typescript %}
+  {{page.sourcecode}}
+{% endhighlight %}
+<hr/>
