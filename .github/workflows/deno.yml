@@ -34,6 +34,12 @@ jobs:
 
       - name: Cache Dependencies
         run: deno cache deps.ts
+        
+      - name: Cache Development Dependencies
+        run: deno cache dev_deps.ts
+        
+      - name: Cache Testing Dependencies
+        run: deno cache testing_deps.ts
 
       - name: Run Tests
         run: deno test -A --unstable
