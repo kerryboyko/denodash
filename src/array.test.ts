@@ -265,7 +265,7 @@ Rhum.testSuite("fromPairs()", () => {
   Rhum.testCase(
     "should create an object from an array of key value tuples",
     () => {
-      const testArr = [
+      const testArr: [string, number][] = [
         ["a", 1],
         ["b", 2],
       ];

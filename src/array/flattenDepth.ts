@@ -1,4 +1,4 @@
-export const flattenDepth = (arr: any[], level = 1, currLevel = 1) => {
+export const flattenDepth = (arr: any[], level = 1, currLevel = 1): any[] => {
   const clone = arr.slice();
   if (level === 0) {
     return clone;

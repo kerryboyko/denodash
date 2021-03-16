@@ -4,7 +4,7 @@ export const differenceWith = <T>(
   comparator: Comparator<T>,
   a: T[],
   b: T[],
-) => {
+): T[] => {
   const diffs: T[] = [];
   for (const val of a) {
     if (!b.some((bVal) => comparator(val, bVal))) {
