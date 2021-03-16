@@ -27,6 +27,7 @@ export const cartesianProduct = <T, U>(a: T[], b: U[]): [T, U][] => {
 };
 
 export default cartesianProduct;
+
 ```
 
 #### Test Examples: 

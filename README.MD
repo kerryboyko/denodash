@@ -106,9 +106,6 @@ and some more tests.
   - union
   - unionBy
   - unionWith
-  - uniq
-  - uniqBy
-  - uniqWith
   - unzip
   - xor
   - zip
@@ -248,6 +245,9 @@ these methods is needed, please create an issue.
   - takeRight
   - takeRightWhile
   - takeWhile
+  - uniq (identical to union())
+  - uniqBy (identical to unionBy())
+  - uniqWith (identical to unionWith())
   - unzipWith
   - without
 - collection
@@ -461,3 +461,5 @@ contributions.
 
 This is still in pre-alpha, with fuller documentation and publishing to
 deno.land to come.
+
+0.1.1 First Published 0.1.2 Documentation added and minor changes.

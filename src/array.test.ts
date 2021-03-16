@@ -25,9 +25,6 @@ import shank from "./array/shank.ts";
 import union from "./array/union.ts";
 import unionBy from "./array/unionBy.ts";
 import unionWith from "./array/unionWith.ts";
-import uniq from "./array/uniq.ts";
-import uniqBy from "./array/uniqBy.ts";
-import uniqWith from "./array/uniqWith.ts";
 
 import unzip from "./array/unzip.ts";
 import xor from "./array/xor.ts";
@@ -419,51 +416,6 @@ Rhum.testSuite("unionWith()", () => {
           { x: 1, y: 2 },
           { x: 2, y: 1 },
           { x: 1, y: 1 },
-        ],
-      );
-    },
-  );
-});
-Rhum.testSuite("uniq()", () => {
-  Rhum.testCase("Creates a duplicate-free version of an array", () => {
-    Rhum.asserts.assertEquals(uniq([1, 2, 1]), [1, 2]);
-  });
-});
-Rhum.testSuite("uniqBy()", () => {
-  Rhum.testCase(
-    "Creates a duplicate-free version of an array, accepting an iterator",
-    () => {
-      Rhum.asserts.assertEquals(uniqBy(Math.floor, [2.1, 1.2, 2.3]), [
-        2.1,
-        1.2,
-      ]);
-      Rhum.asserts.assertEquals(
-        uniqBy((elem: Object & { x: number }) => elem["x"], [
-          { x: 1 },
-          { x: 2 },
-          { x: 1 },
-        ]),
-        [{ x: 1 }, { x: 2 }],
-      );
-    },
-  );
-});
-Rhum.testSuite("uniqWith()", () => {
-  Rhum.testCase(
-    "Creates a duplicate-free version of an array, accepting a comparator",
-    () => {
-      Rhum.asserts.assertEquals(
-        uniqWith(
-          (a: any, b: any): boolean => JSON.stringify(a) === JSON.stringify(b),
-          [
-            { x: 1, y: 2 },
-            { x: 2, y: 1 },
-            { x: 1, y: 2 },
-          ],
-        ),
-        [
-          { x: 1, y: 2 },
-          { x: 2, y: 1 },
         ],
       );
     },

@@ -1,6 +1,6 @@
 import identity from "../utils/identity.ts";
-import unionBy from "./unionBy.ts";
+import union from "./union.ts";
 
-export const uniq = <T>(arr: T[]): T[] => unionBy<T>(identity, arr);
+export const uniq = union;
 
 export default uniq;

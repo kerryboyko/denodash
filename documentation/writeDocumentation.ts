@@ -8,7 +8,7 @@ const justParens = (line: string): number => {
 
 const exampleFinder = async (
   testText: string,
-  name: string
+  name: string,
 ): Promise<string> => {
   let parenthesisCount = 0;
   let startCursor = 0;
@@ -39,7 +39,7 @@ export const documentationGenerator = async ({
   const workingDirectory = Deno.cwd();
   const src = await Deno.readTextFile(`${workingDirectory}/${sourceFile}`);
   const examp = await Deno.readTextFile(
-    `${workingDirectory}/${testFile}`
+    `${workingDirectory}/${testFile}`,
   ).then((testText: string) => exampleFinder(testText, name));
 
   return `
