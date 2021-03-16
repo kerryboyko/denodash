@@ -1,12 +1,13 @@
-
 ## differenceWith
 
 #### import
+
 ```typescript
-import differenceWith from "https://deno.land/x/denodash@0.1.1/src/array/differenceWith.ts"
+import differenceWith from "https://deno.land/x/denodash@0.1.1/src/array/differenceWith.ts";
 ```
 
 #### signature
+
 ```typescript
 differenceWith = <T>(
         comparator: Comparator<T>,
@@ -15,7 +16,9 @@ differenceWith = <T>(
       )
 ```
 
-Takes two arrays (a, b) and a comparator (which will return a boolean). It returns an array of elements in a where no element in b returns true for comparator(elemA, elemB)
+Takes two arrays (a, b) and a comparator (which will return a boolean). It
+returns an array of elements in a where no element in b returns true for
+comparator(elemA, elemB)
 
 #### Source:
 
@@ -37,10 +40,9 @@ export const differenceWith = <T>(
 };
 
 export default differenceWith;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("differenceWith()", () => {
@@ -69,5 +71,3 @@ Rhum.testSuite("differenceWith()", () => {
   });
 });
 ```
-
-  

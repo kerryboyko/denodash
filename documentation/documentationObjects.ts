@@ -205,6 +205,22 @@ const arrayDocObjects = [
   signature: `${ado.name} = ${ado.signature}`,
 }));
 
-const docObjects = [...arrayDocObjects];
+const collectionDocObjects = [
+  {
+    name: "count",
+    signature: `<T>(
+    arr: T[],
+  ): Record<string, number>`,
+    description:
+      `Counts the number of occurances of each element and returns a Record<element as string, number> count of elements`,
+  },
+].map((cdo) => ({
+  ...cdo,
+  testFile: "src/collection.test.ts",
+  sourceFile: `src/collection/${cdo.name}.ts`,
+  signature: `${cdo.name} = ${cdo.signature}`,
+}));
+
+const docObjects = [...arrayDocObjects, ...collectionDocObjects];
 
 export default docObjects;

@@ -1,17 +1,19 @@
-
 ## unionBy
 
 #### import
+
 ```typescript
-import unionBy from "https://deno.land/x/denodash@0.1.1/src/array/unionBy.ts"
+import unionBy from "https://deno.land/x/denodash@0.1.1/src/array/unionBy.ts";
 ```
 
 #### signature
+
 ```typescript
 unionBy = <T>(fn: Iteratee<T, any>, ...arrays: T[][]): T[]
 ```
 
-Creates an array of values that result in a unique value when passed through fn, in order
+Creates an array of values that result in a unique value when passed through fn,
+in order
 
 #### Source:
 
@@ -32,10 +34,9 @@ export const unionBy = <T>(fn: Iteratee<T, any>, ...arrays: T[][]): T[] => {
 };
 
 export default unionBy;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("unionBy()", () => {
@@ -65,5 +66,3 @@ Rhum.testSuite("unionBy()", () => {
   );
 });
 ```
-
-  

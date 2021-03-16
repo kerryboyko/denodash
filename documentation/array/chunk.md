@@ -1,12 +1,13 @@
-
 ## chunk
 
 #### import
+
 ```typescript
-import chunk from "https://deno.land/x/denodash@0.1.1/src/array/chunk.ts"
+import chunk from "https://deno.land/x/denodash@0.1.1/src/array/chunk.ts";
 ```
 
 #### signature
+
 ```typescript
 chunk = <T>(arr: T[], size: number = 1): T[][]
 ```
@@ -28,10 +29,9 @@ export const chunk = <T>(arr: T[], size = 1): T[][] => {
 };
 
 export default chunk;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("chunk()", () => {
@@ -70,5 +70,3 @@ Rhum.testSuite("chunk()", () => {
   });
 });
 ```
-
-  
