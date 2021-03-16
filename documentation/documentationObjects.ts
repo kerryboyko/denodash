@@ -99,6 +99,53 @@ const arrayDocObjects = [
     ): Record<K, T>`,
     description: `Takes an array of tuples of [key: K, value: T] and returns an object where {[key: k]: value}`,
   },
+  {
+    name: "intersection",
+    signature: `<T>(...arrays: T[][]): T[]`,
+    description: `Takes any number of arrays and returns every element that occurs in each array. The order is determined by the first array passed in.`,
+  },
+  {
+    name: "intersectionBy",
+    signature: `<T>(fn: Iteratee<T, any>, ...arrays: T[][]): T[]`,
+    description: `Takes any number of arrays and returns every element in the first array where iteratee(elementOfFirst) has the same value as iteratee(oneOfTheElementsOfTheOtherArray/s)`,
+  },
+  {
+    name: "intersectionWith",
+    signature: `<T>(
+      comparator: Comparator<T>,
+      ...arrays: T[][]
+    ): T[]`,
+    description: `Takes any number of arrays and returns every element in the first array where some element of each of the other arrays returns true when placed in the comparator with the element from the first array`,
+  },
+  {
+    name: "lastIndexOf",
+    signature: `<T>(arr: T[], target: T): number`,
+    description: `Finds the last index of array (arr) that is the target (target) and returns the index`,
+  },
+  {
+    name: "partition",
+    signature: `<T>(arr: T[], filterArray: boolean[]): [T[], T[]]`,
+    description: `Divides an array of elements into two seperate arrays. If the value in filterArray[index] is true, then arr[index] is placed in the first array of the returned tuple; otherwise it is placed in the second`,
+  },
+  {
+    name: "partitionBy",
+    signature: `<T>(
+      fn: (val: T, i: number) => boolean,
+      arr: T[],
+    ): [T[], T[]]`,
+    description: `Divides an array of elements into two seperate arrays. If fn(arr[index]) returns true, then arr[index] is placed in the first array in the returned tuple, otherwise it is placed in the second.`,
+  },
+  {
+    name: "shank",
+    signature: `<T>(
+      arr: T[],
+      index: number = 0,
+      delCount: number = 0,
+      ...elements: T[]
+    ): T[]`,
+    description: `Works exactly like [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice), but returns a new array,
+    rather than mutating the original.`,
+  },
 ].map((ado) => ({
   ...ado,
   testFile: "src/array.test.ts",
