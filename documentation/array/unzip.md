@@ -1,19 +1,17 @@
+
 ## unzip
 
 #### import
-
 ```typescript
-import unzip from "https://deno.land/x/denodash@0.1.1/src/array/unzip.ts";
+import unzip from "https://deno.land/x/denodash@0.1.1/src/array/unzip.ts"
 ```
 
 #### signature
-
 ```typescript
 unzip = (arrays: any[][]): any[][]
 ```
 
-accepts an array of grouped elements and creates an array regrouping the
-elements to their pre-zip configuration.
+accepts an array of grouped elements and creates an array regrouping the elements to their pre-zip configuration.
 
 #### Source:
 
@@ -23,9 +21,10 @@ import zip from "./zip.ts";
 const unzip = (arrays: any[][]): any[][] => zip(...arrays);
 
 export default unzip;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("unzip()", () => {
@@ -44,3 +43,5 @@ Rhum.testSuite("unzip()", () => {
   });
 });
 ```
+
+  

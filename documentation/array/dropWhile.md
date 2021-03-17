@@ -1,24 +1,20 @@
+
 ## dropWhile
 
 #### import
-
 ```typescript
-import dropWhile from "https://deno.land/x/denodash@0.1.1/src/array/dropWhile.ts";
+import dropWhile from "https://deno.land/x/denodash@0.1.1/src/array/dropWhile.ts"
 ```
 
 #### signature
-
 ```typescript
 dropWhile = <T>(
       arr: T[],
       predicate: Predicate<T>,
-    ): T[]
+    ): T[] 
 ```
 
-Takes an array (arr) and a Predicate (predicate) which will return boolean. It
-iterates over the array and will drop (or more accurately, not copy) all
-elements until it reaches an element where predicate(element) returns false. It
-returns a new array.
+Takes an array (arr) and a Predicate (predicate) which will return boolean. It iterates over the array and will drop (or more accurately, not copy) all elements until it reaches an element where predicate(element) returns false. It returns a new array.
 
 #### Source:
 
@@ -38,9 +34,10 @@ export const dropWhile = <T>(
 };
 
 export default dropWhile;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("dropWhile()", () => {
@@ -56,3 +53,5 @@ Rhum.testSuite("dropWhile()", () => {
   );
 });
 ```
+
+  

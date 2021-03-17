@@ -145,7 +145,6 @@ and some more tests.
   - type ObjectKey
   - type Predicate
   - type SortComparator
-  - type Transformer
   - type ValueOrArray
 - utils
   - comparatorChain

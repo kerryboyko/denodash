@@ -1,19 +1,17 @@
+
 ## flattenDepth
 
 #### import
-
 ```typescript
-import flattenDepth from "https://deno.land/x/denodash@0.1.1/src/array/flattenDepth.ts";
+import flattenDepth from "https://deno.land/x/denodash@0.1.1/src/array/flattenDepth.ts"
 ```
 
 #### signature
-
 ```typescript
 flattenDepth = (arr: any[], level: number = 1): any[]
 ```
 
-Takes an array (arr) and flattens it by (level) levels. There is a third
-parameter, currLevel, which is only used internally for recursion.
+Takes an array (arr) and flattens it by (level) levels. There is a third parameter, currLevel, which is only used internally for recursion.
 
 #### Source:
 
@@ -36,9 +34,10 @@ export const flattenDepth = (arr: any[], level = 1, currLevel = 1): any[] => {
 };
 
 export default flattenDepth;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("flattenDepth()", () => {
@@ -50,3 +49,5 @@ Rhum.testSuite("flattenDepth()", () => {
   });
 });
 ```
+
+  

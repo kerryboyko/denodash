@@ -1,1 +1,1 @@
-export type ObjectKey = string | number;
+export type ObjectKey = string | number | symbol;

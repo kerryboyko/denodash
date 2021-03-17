@@ -1,6 +1,3 @@
-import type { ObjectKey } from "../types/ObjectKey.d.ts";
-import type { Transformer } from "../types/Transformer.d.ts";
-
 const stringifyKey = (k: any, e: string): string | never => {
   if (typeof k === "string") {
     return k;

@@ -1,31 +1,39 @@
 
-## count
+## countBy
 
 #### import
 ```typescript
-import count from "https://deno.land/x/denodash@0.1.1/src/collection/count.ts"
+import countBy from "https://deno.land/x/denodash@0.1.1/src/collection/countBy.ts"
 ```
 
 #### signature
 ```typescript
-count = <T>(
-    arr: T[],
-  ): Record<string, number>
+countBy = <T>(
+      iteratee: Iteratee<T, any>,
+      arr: T[],
+    ): Record<string, number>
 ```
 
-Counts the number of occurances of each element and returns a Record<element as string, number> count of elements
+Runs each element through a iteratee, and returns a count of how many times the result occurs. Returns Record<element as string, number> count of results
 
 #### Source:
 
 ```typescript
-import identity from "../utils/identity.ts";
-import countBy from "./countBy.ts";
+import type { Iteratee } from "../types/Iteratee.d.ts";
 
-export const count = <T>(
+export const countBy = <T>(
+  iteratee: Iteratee<T, any>,
   arr: T[],
-): Record<string, number> => countBy(identity, arr);
+): Record<string, number> => {
+  const output: Record<string, number> = {};
+  for (const elem of arr) {
+    const key = iteratee(elem).toString();
+    output[key] = output[key] === undefined ? 1 : output[key] + 1;
+  }
+  return output;
+};
 
-export default count;
+export default countBy;
 
 ```
 

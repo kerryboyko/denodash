@@ -1,19 +1,17 @@
+
 ## unionWith
 
 #### import
-
 ```typescript
-import unionWith from "https://deno.land/x/denodash@0.1.1/src/array/unionWith.ts";
+import unionWith from "https://deno.land/x/denodash@0.1.1/src/array/unionWith.ts"
 ```
 
 #### signature
-
 ```typescript
 unionWith = <T>(comparator: Comparator<T>, ...arrays: T[][]): T[]
 ```
 
-Creates an array of values where every value does equals false when passed in a
-comparator with every other value
+Creates an array of values where every value does equals false when passed in a comparator with every other value
 
 #### Source:
 
@@ -32,9 +30,10 @@ const unionWith = <T>(comparator: Comparator<T>, ...arrays: T[][]): T[] => {
 };
 
 export default unionWith;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("unionWith()", () => {
@@ -65,3 +64,5 @@ Rhum.testSuite("unionWith()", () => {
   );
 });
 ```
+
+  

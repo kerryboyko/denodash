@@ -1,20 +1,17 @@
+
 ## chunkIntoParts
 
 #### import
-
 ```typescript
-import chunkIntoParts from "https://deno.land/x/denodash@0.1.1/src/array/chunkIntoParts.ts";
+import chunkIntoParts from "https://deno.land/x/denodash@0.1.1/src/array/chunkIntoParts.ts"
 ```
 
 #### signature
-
 ```typescript
 chunkIntoParts = <T>(arr: T[], parts = 1): T[][]
 ```
 
-Takes an array (arr) and splits it into multiple parts (parts) of equal size.
-For example: an array of length 10 split into 3 parts would be split into 4, 4,
-and 2 parts
+Takes an array (arr) and splits it into multiple parts (parts) of equal size. For example: an array of length 10 split into 3 parts would be split into 4, 4, and 2 parts
 
 #### Source:
 
@@ -27,9 +24,10 @@ export const chunkIntoParts = <T>(arr: T[], parts = 1): T[][] => {
 };
 
 export default chunkIntoParts;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("chunkIntoParts()", () => {
@@ -91,3 +89,5 @@ Rhum.testSuite("chunkIntoParts()", () => {
   });
 });
 ```
+
+  

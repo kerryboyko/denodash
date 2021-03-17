@@ -214,6 +214,75 @@ const collectionDocObjects = [
     description:
       `Counts the number of occurances of each element and returns a Record<element as string, number> count of elements`,
   },
+  {
+    name: "countBy",
+    signature: `<T>(
+      iteratee: Iteratee<T, any>,
+      arr: T[],
+    ): Record<string, number>`,
+    description:
+      `Runs each element through a iteratee, and returns a count of how many times the result occurs. Returns Record<element as string, number> count of results`,
+  },
+  {
+    name: "flatMapDeep",
+    signature: `<T, U>(iteratee: Iteratee<T, U>, arr: T[]): U[]`,
+    description:
+      `Runs each element through a iteratee, and returns a flatMap of the results after being run through iteratee. T is the parameter type of iteratee, U is the return type of the iteratee, which may or may not be the same type.`,
+  },
+  {
+    name: "flatMapDepth",
+    signature: `<T, U>(
+      iteratee: Iteratee<T, U>,
+      arr: T[],
+      depth: number = Number.MAX_SAFE_INTEGER,
+    ): U[]`,
+    description:
+      `Runs each element through a iteratee, and returns a flatMap of the results after being run through iteratee. T is the parameter type of iteratee, up to a number of levels specified.`,
+  },
+  {
+    name: "groupBy",
+    signature: `<T>(
+      iteratee: Iteratee<T, any>,
+      arr: T[],
+    ): Record<string, T[]>`,
+    description:
+      `Groups elements of an array of type T according to a criteria provided (iteratee) as a Record of arrays of type T`,
+  },
+  {
+    name: "keyBy",
+    signature: `<T extends Record<string, any>>(
+      argument: Iteratee<T, string> | string,
+      arr: T[],
+    ): Record<string, T>`,
+    description:
+      `Creates an object composed of keys generated from the results of running each element of collection thru iteratee if a function is provide, or through (elem)=> elem[argument] if argument is a string. Input must be a Record (i.e., a key-value object with strings as keys)`,
+  },
+  {
+    name: "sample",
+    signature: `<T>(array: T[], sampleSize: number = 1): T[]`,
+    description:
+      `Randomly picks n (sampleSize) elements from an array. The same element will not be picked twice.`,
+  },
+  {
+    name: "sampleOne",
+    signature: `<T>(array: T[]): T`,
+    description: `Randomly picks one random element from an array`,
+  },
+  {
+    name: "shuffle",
+    signature: `<T>(array: T[]): T[]`,
+    description:
+      `Implements a Fischer-Yates shuffler. Takes an array and returns a new array with the same elements but randomly shuffled.`,
+  },
+  {
+    name: "sortBy",
+    signature: `<T>(
+      array: T[],
+      ...comparators: SortComparator<T>[]
+    ): T[]`,
+    description:
+      `Returns a copy of the array provided, sorted by the criteria provided (comparators). Comparators are prioritized from first to last.`,
+  },
 ].map((cdo) => ({
   ...cdo,
   testFile: "src/collection.test.ts",

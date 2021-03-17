@@ -1,13 +1,12 @@
+
 ## intersectionWith
 
 #### import
-
 ```typescript
-import intersectionWith from "https://deno.land/x/denodash@0.1.1/src/array/intersectionWith.ts";
+import intersectionWith from "https://deno.land/x/denodash@0.1.1/src/array/intersectionWith.ts"
 ```
 
 #### signature
-
 ```typescript
 intersectionWith = <T>(
       comparator: Comparator<T>,
@@ -15,9 +14,7 @@ intersectionWith = <T>(
     ): T[]
 ```
 
-Takes any number of arrays and returns every element in the first array where
-some element of each of the other arrays returns true when placed in the
-comparator with the element from the first array
+Takes any number of arrays and returns every element in the first array where some element of each of the other arrays returns true when placed in the comparator with the element from the first array
 
 #### Source:
 
@@ -44,9 +41,10 @@ const intersectionWith = <T>(
 };
 
 export default intersectionWith;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("intersectionWith()", () => {
@@ -73,3 +71,5 @@ Rhum.testSuite("intersectionWith()", () => {
   );
 });
 ```
+
+  

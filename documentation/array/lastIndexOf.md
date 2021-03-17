@@ -1,19 +1,17 @@
+
 ## lastIndexOf
 
 #### import
-
 ```typescript
-import lastIndexOf from "https://deno.land/x/denodash@0.1.1/src/array/lastIndexOf.ts";
+import lastIndexOf from "https://deno.land/x/denodash@0.1.1/src/array/lastIndexOf.ts"
 ```
 
 #### signature
-
 ```typescript
 lastIndexOf = <T>(arr: T[], target: T): number
 ```
 
-Finds the last index of array (arr) that is the target (target) and returns the
-index
+Finds the last index of array (arr) that is the target (target) and returns the index
 
 #### Source:
 
@@ -24,9 +22,10 @@ export const lastIndexOf = <T>(arr: T[], target: T): number =>
   findLastIndex(arr, (elem: T): boolean => elem === target);
 
 export default lastIndexOf;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("lastIndexOf()", () => {
@@ -36,3 +35,5 @@ Rhum.testSuite("lastIndexOf()", () => {
   });
 });
 ```
+
+  

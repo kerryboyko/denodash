@@ -1,13 +1,12 @@
+
 ## union
 
 #### import
-
 ```typescript
-import union from "https://deno.land/x/denodash@0.1.1/src/array/union.ts";
+import union from "https://deno.land/x/denodash@0.1.1/src/array/union.ts"
 ```
 
 #### signature
-
 ```typescript
 union = <T>(...arrays: T[][]): T[]
 ```
@@ -24,9 +23,10 @@ export const union = <T>(...arrays: T[][]): T[] =>
   unionBy<T>(identity, ...arrays);
 
 export default union;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("union()", () => {
@@ -38,3 +38,5 @@ Rhum.testSuite("union()", () => {
   );
 });
 ```
+
+  

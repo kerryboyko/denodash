@@ -1,19 +1,17 @@
+
 ## intersection
 
 #### import
-
 ```typescript
-import intersection from "https://deno.land/x/denodash@0.1.1/src/array/intersection.ts";
+import intersection from "https://deno.land/x/denodash@0.1.1/src/array/intersection.ts"
 ```
 
 #### signature
-
 ```typescript
 intersection = <T>(...arrays: T[][]): T[]
 ```
 
-Takes any number of arrays and returns every element that occurs in each array.
-The order is determined by the first array passed in.
+Takes any number of arrays and returns every element that occurs in each array. The order is determined by the first array passed in.
 
 #### Source:
 
@@ -25,9 +23,10 @@ export const intersection = <T>(...arrays: T[][]): T[] =>
   intersectionBy<T>(identity, ...arrays);
 
 export default intersection;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("intersection()", () => {
@@ -43,3 +42,5 @@ Rhum.testSuite("intersection()", () => {
   );
 });
 ```
+
+  
