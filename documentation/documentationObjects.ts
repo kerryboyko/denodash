@@ -412,12 +412,43 @@ const objectDocObjects = [
   signature: `${odo.name} = ${odo.signature}`,
 }));
 
+const utilsDocObjects = [
+  {
+    name: "comparatorChain",
+    signature: `<T>(
+      ...comparators: SortComparator<T>[]
+    ): SortComparator<T>`,
+    description: `Creates a single sort comparator out of several sort parameters. The first sort comparator passed in has priority, followed by the rest.`,
+  },
+  {
+    name: "delay",
+    signature: `(time: number, fn?: Function, ...args: any[]): Promise<any>`,
+    description: `Creates a promise which resolves only after a number of milliseconds (time) has passed.`,
+  },
+  {
+    name: "identity",
+    signature: `<T>(x: T): T `,
+    description: `A function which returns the value passed in as a parameter. (Useful as a default function)`,
+  },
+  {
+    name: "randomOf",
+    signature: `(max: number): number`,
+    description: `Returns a random number (an integer) between 0 and the maximum (non-inclusive)`,
+  },
+].map((udo) => ({
+  ...udo,
+  testFile: "src/utils.test.ts",
+  sourceFile: `src/utils/${udo.name}.ts`,
+  signature: `${udo.name} = ${udo.signature}`,
+}));
+
 const docObjects = [
   ...arrayDocObjects,
   ...collectionDocObjects,
   ...functionDocObjects,
   ...langDocObjects,
   ...objectDocObjects,
+  ...utilsDocObjects,
 ];
 
 export default docObjects;
