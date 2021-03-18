@@ -30,7 +30,24 @@ export default delay;
 #### Test Examples: 
 
 ```typescript
-import { Rhum } from "../testing_deps.ts";
+  Rhum.testSuite("delay()", () => {
+    Rhum.testCase("delays execution of a function", async () => {
+      let count = 0;
+      setTimeout(() => {
+        count = 10;
+      }, 20);
+      Rhum.asserts.assertStrictEquals(count, 0);
+      await delay(30);
+      Rhum.asserts.assertStrictEquals(count, 10);
+      delay(20, () => {
+        count = 20;
+      });
+      Rhum.asserts.assertStrictEquals(count, 10);
+      await delay(30);
+      Rhum.asserts.assertStrictEquals(count, 20);
+
+    });
+  });
 ```
 
   

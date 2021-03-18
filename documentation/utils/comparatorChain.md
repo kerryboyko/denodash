@@ -62,8 +62,8 @@ export default comparatorChain;
         testArr.sort(
           comparatorChain(
             (a: NameAge, b: NameAge) => a.age - b.age,
-            (a: NameAge, b: NameAge) => a.name.localeCompare(b.name),
-          ),
+            (a: NameAge, b: NameAge) => a.name.localeCompare(b.name)
+          )
         ),
         [
           {
@@ -78,7 +78,7 @@ export default comparatorChain;
             age: 25,
             name: "carl",
           },
-        ],
+        ]
       );
     });
   });
