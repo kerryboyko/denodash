@@ -1,5 +1,7 @@
 import type { DocObject } from "./documentationObjects.ts";
 
+const VERSION = `0.1.2`;
+
 const justParens = (line: string): number => {
   const openCount = (line.match(/\(/g) || []).length;
   const closeCount = (line.match(/\)/g) || []).length;
@@ -47,7 +49,7 @@ export const documentationGenerator = async ({
 
 #### import
 \`\`\`typescript
-import ${name} from "https://deno.land/x/denodash@0.1.1/${sourceFile}"
+import ${name} from "https://deno.land/x/denodash@${VERSION}/${sourceFile}"
 \`\`\`
 
 #### signature

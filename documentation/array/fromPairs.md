@@ -1,21 +1,19 @@
+
 ## fromPairs
 
 #### import
-
 ```typescript
-import fromPairs from "https://deno.land/x/denodash@0.1.1/src/array/fromPairs.ts";
+import fromPairs from "https://deno.land/x/denodash@0.1.2/src/array/fromPairs.ts"
 ```
 
 #### signature
-
 ```typescript
 fromPairs = <K extends string | number | symbol, T>(
       arr: Array<[K, T]>,
     ): Record<K, T>
 ```
 
-Takes an array of tuples of [key: K, value: T] and returns an object where
-{[key: k]: value}
+Takes an array of tuples of [key: K, value: T] and returns an object where {[key: k]: value}
 
 #### Source:
 
@@ -35,9 +33,10 @@ export const fromPairs = <K extends string | number | symbol, T>(
 };
 
 export default fromPairs;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("fromPairs()", () => {
@@ -53,3 +52,5 @@ Rhum.testSuite("fromPairs()", () => {
   );
 });
 ```
+
+  

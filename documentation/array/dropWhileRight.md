@@ -1,13 +1,12 @@
+
 ## dropWhileRight
 
 #### import
-
 ```typescript
-import dropWhileRight from "https://deno.land/x/denodash@0.1.1/src/array/dropWhileRight.ts";
+import dropWhileRight from "https://deno.land/x/denodash@0.1.2/src/array/dropWhileRight.ts"
 ```
 
 #### signature
-
 ```typescript
 dropWhileRight = <T>(
       arr: T[],
@@ -15,11 +14,7 @@ dropWhileRight = <T>(
     ): T[]
 ```
 
-Takes an array (arr) and a Predicate (predicate) which will return boolean. It
-iterates over the array starting from the last element in the array, towards the
-first element, and will drop (or more accurately, not copy) all elements until
-it reaches an element where predicate(element) returns false. It returns a new
-array.
+Takes an array (arr) and a Predicate (predicate) which will return boolean. It iterates over the array starting from the last element in the array, towards the first element, and will drop (or more accurately, not copy) all elements until it reaches an element where predicate(element) returns false. It returns a new array.
 
 #### Source:
 
@@ -39,9 +34,10 @@ export const dropWhileRight = <T>(
 };
 
 export default dropWhileRight;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
 Rhum.testSuite("dropWhileRight()", () => {
@@ -57,3 +53,5 @@ Rhum.testSuite("dropWhileRight()", () => {
   );
 });
 ```
+
+  

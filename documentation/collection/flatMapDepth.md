@@ -1,13 +1,12 @@
+
 ## flatMapDepth
 
 #### import
-
 ```typescript
-import flatMapDepth from "https://deno.land/x/denodash@0.1.1/src/collection/flatMapDepth.ts";
+import flatMapDepth from "https://deno.land/x/denodash@0.1.2/src/collection/flatMapDepth.ts"
 ```
 
 #### signature
-
 ```typescript
 flatMapDepth = <T, U>(
       iteratee: Iteratee<T, U>,
@@ -16,9 +15,7 @@ flatMapDepth = <T, U>(
     ): U[]
 ```
 
-Runs each element through a iteratee, and returns a flatMap of the results after
-being run through iteratee. T is the parameter type of iteratee, up to a number
-of levels specified.
+Runs each element through a iteratee, and returns a flatMap of the results after being run through iteratee. T is the parameter type of iteratee, up to a number of levels specified.
 
 #### Source:
 
@@ -34,23 +31,26 @@ export const flatMapDepth = <T, U>(
 ): U[] => flattenDepth(arr.map(iteratee), depth);
 
 export default flatMapDepth;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
-Rhum.testSuite("flatMapDepth()", () => {
-  Rhum.testCase(
-    "should created a flattened flatmap only to a certain level",
-    () => {
-      Rhum.asserts.assertEquals(
-        flatMapDepth((n: any) => [[[n, n]]], [1, 2], 2),
-        [
-          [1, 1],
-          [2, 2],
-        ],
-      );
-    },
-  );
-});
+  Rhum.testSuite("flatMapDepth()", () => {
+    Rhum.testCase(
+      "should created a flattened flatmap only to a certain level",
+      () => {
+        Rhum.asserts.assertEquals(
+          flatMapDepth((n: any) => [[[n, n]]], [1, 2], 2),
+          [
+            [1, 1],
+            [2, 2],
+          ],
+        );
+      },
+    );
+  });
 ```
+
+  

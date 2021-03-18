@@ -1,13 +1,12 @@
+
 ## get
 
 #### import
-
 ```typescript
-import get from "https://deno.land/x/denodash@0.1.1/src/object/get.ts";
+import get from "https://deno.land/x/denodash@0.1.2/src/object/get.ts"
 ```
 
 #### signature
-
 ```typescript
 get = (
       obj: Record<string | number, any>,
@@ -16,9 +15,7 @@ get = (
     ): any
 ```
 
-Gets the value of an object at the property path, which may be expressed as a
-string or an array of string | number. If the property path does not exist,
-returns the "retValueIfUndef" value provided.
+Gets the value of an object at the property path, which may be expressed as a string or an array of string | number. If the property path does not exist, returns the "retValueIfUndef" value provided.
 
 #### Source:
 
@@ -76,55 +73,58 @@ export const get = (
 };
 
 export default get;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
-Rhum.testSuite("get()", () => {
-  const testObj = {
-    a: {
-      b: 2,
-      c: {
+  Rhum.testSuite("get()", () => {
+    const testObj = {
+      a: {
+        b: 2,
+        c: {
+          d: false,
+          e: ["foo", "bar", { baz: "quux" }],
+        },
+      },
+    };
+    Rhum.testCase("should get objects by a path", () => {
+      Rhum.asserts.assertStrictEquals(
+        get(testObj, ["a", "c", "e", 2, "baz"], "nope"),
+        "quux",
+      );
+    });
+    Rhum.testCase("should return whole objects", () => {
+      Rhum.asserts.assertEquals(get(testObj, ["a", "c"], "nope"), {
         d: false,
         e: ["foo", "bar", { baz: "quux" }],
-      },
-    },
-  };
-  Rhum.testCase("should get objects by a path", () => {
-    Rhum.asserts.assertStrictEquals(
-      get(testObj, ["a", "c", "e", 2, "baz"], "nope"),
-      "quux",
-    );
-  });
-  Rhum.testCase("should return whole objects", () => {
-    Rhum.asserts.assertEquals(get(testObj, ["a", "c"], "nope"), {
-      d: false,
-      e: ["foo", "bar", { baz: "quux" }],
+      });
+    });
+    Rhum.testCase("should a default if path does not exist", () => {
+      Rhum.asserts.assertStrictEquals(
+        get(testObj, ["a", "q", "c"], "nope"),
+        "nope",
+      );
+      Rhum.asserts.assertStrictEquals(
+        get(testObj, ["a", "b", "c"], "nope"),
+        "nope",
+      );
+    });
+    Rhum.testCase("should work with strings", () => {
+      Rhum.asserts.assertEquals(get(testObj, "a.c.e", "nope"), [
+        "foo",
+        "bar",
+        { baz: "quux" },
+      ]);
+    });
+    Rhum.testCase("should work with a mix of arrays and strings", () => {
+      Rhum.asserts.assertStrictEquals(
+        get(testObj, ["a.c", "e", 2, "baz"], "nope"),
+        "quux",
+      );
     });
   });
-  Rhum.testCase("should a default if path does not exist", () => {
-    Rhum.asserts.assertStrictEquals(
-      get(testObj, ["a", "q", "c"], "nope"),
-      "nope",
-    );
-    Rhum.asserts.assertStrictEquals(
-      get(testObj, ["a", "b", "c"], "nope"),
-      "nope",
-    );
-  });
-  Rhum.testCase("should work with strings", () => {
-    Rhum.asserts.assertEquals(get(testObj, "a.c.e", "nope"), [
-      "foo",
-      "bar",
-      { baz: "quux" },
-    ]);
-  });
-  Rhum.testCase("should work with a mix of arrays and strings", () => {
-    Rhum.asserts.assertStrictEquals(
-      get(testObj, ["a.c", "e", 2, "baz"], "nope"),
-      "quux",
-    );
-  });
-});
 ```
+
+  

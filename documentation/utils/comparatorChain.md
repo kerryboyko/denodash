@@ -1,21 +1,19 @@
+
 ## comparatorChain
 
 #### import
-
 ```typescript
-import comparatorChain from "https://deno.land/x/denodash@0.1.1/src/utils/comparatorChain.ts";
+import comparatorChain from "https://deno.land/x/denodash@0.1.2/src/utils/comparatorChain.ts"
 ```
 
 #### signature
-
 ```typescript
 comparatorChain = <T>(
       ...comparators: SortComparator<T>[]
     ): SortComparator<T>
 ```
 
-Creates a single sort comparator out of several sort parameters. The first sort
-comparator passed in has priority, followed by the rest.
+Creates a single sort comparator out of several sort parameters. The first sort comparator passed in has priority, followed by the rest.
 
 #### Source:
 
@@ -38,50 +36,53 @@ export const comparatorChain = <T>(
   };
 
 export default comparatorChain;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
-Rhum.testSuite("comparatorChain()", () => {
-  Rhum.testCase("creates a chain of prioritized comparators", () => {
-    type NameAge = { name: string; age: number };
-    const testArr: NameAge[] = [
-      {
-        name: "alex",
-        age: 25,
-      },
-      {
-        name: "betty",
-        age: 15,
-      },
-      {
-        name: "carl",
-        age: 25,
-      },
-    ];
-    Rhum.asserts.assertEquals(
-      testArr.sort(
-        comparatorChain(
-          (a: NameAge, b: NameAge) => a.age - b.age,
-          (a: NameAge, b: NameAge) => a.name.localeCompare(b.name),
-        ),
-      ),
-      [
+  Rhum.testSuite("comparatorChain()", () => {
+    Rhum.testCase("creates a chain of prioritized comparators", () => {
+      type NameAge = { name: string; age: number };
+      const testArr: NameAge[] = [
         {
-          age: 15,
-          name: "betty",
-        },
-        {
-          age: 25,
           name: "alex",
+          age: 25,
         },
         {
-          age: 25,
-          name: "carl",
+          name: "betty",
+          age: 15,
         },
-      ],
-    );
+        {
+          name: "carl",
+          age: 25,
+        },
+      ];
+      Rhum.asserts.assertEquals(
+        testArr.sort(
+          comparatorChain(
+            (a: NameAge, b: NameAge) => a.age - b.age,
+            (a: NameAge, b: NameAge) => a.name.localeCompare(b.name),
+          ),
+        ),
+        [
+          {
+            age: 15,
+            name: "betty",
+          },
+          {
+            age: 25,
+            name: "alex",
+          },
+          {
+            age: 25,
+            name: "carl",
+          },
+        ],
+      );
+    });
   });
-});
 ```
+
+  

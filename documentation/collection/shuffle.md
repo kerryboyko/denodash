@@ -1,19 +1,17 @@
+
 ## shuffle
 
 #### import
-
 ```typescript
-import shuffle from "https://deno.land/x/denodash@0.1.1/src/collection/shuffle.ts";
+import shuffle from "https://deno.land/x/denodash@0.1.2/src/collection/shuffle.ts"
 ```
 
 #### signature
-
 ```typescript
 shuffle = <T>(array: T[]): T[]
 ```
 
-Implements a Fischer-Yates shuffler. Takes an array and returns a new array with
-the same elements but randomly shuffled.
+Implements a Fischer-Yates shuffler. Takes an array and returns a new array with the same elements but randomly shuffled.
 
 #### Source:
 
@@ -35,17 +33,20 @@ export const shuffle = <T>(array: T[]): T[] => {
 };
 
 export default shuffle;
+
 ```
 
-#### Test Examples:
+#### Test Examples: 
 
 ```typescript
-Rhum.testSuite("shuffle()", () => {
-  Rhum.testCase("shuffles an array", () => {
-    const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const shuffled = shuffle(arr);
-    Rhum.asserts.assertArrayContains(shuffled, arr);
-    Rhum.asserts.assertNotEquals(shuffled, arr); // this test may fail, the chances of that however, are 10!:1 (3.6M/1);
+  Rhum.testSuite("shuffle()", () => {
+    Rhum.testCase("shuffles an array", () => {
+      const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const shuffled = shuffle(arr);
+      Rhum.asserts.assertArrayContains(shuffled, arr);
+      Rhum.asserts.assertNotEquals(shuffled, arr); // this test may fail, the chances of that however, are 10!:1 (3.6M/1);
+    });
   });
-});
 ```
+
+  
