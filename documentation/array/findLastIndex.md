@@ -1,12 +1,13 @@
-
 ## findLastIndex
 
 #### import
+
 ```typescript
-import findLastIndex from "https://deno.land/x/denodash@0.1.1/src/array/findLastIndex.ts"
+import findLastIndex from "https://deno.land/x/denodash@0.1.1/src/array/findLastIndex.ts";
 ```
 
 #### signature
+
 ```typescript
 findLastIndex = <T>(
       arr: T[],
@@ -14,7 +15,8 @@ findLastIndex = <T>(
     ): number
 ```
 
-Takes an array (arr) and a Predicate (predicate) and finds the last index in the array where predicate(arr[index]) returns true
+Takes an array (arr) and a Predicate (predicate) and finds the last index in the
+array where predicate(arr[index]) returns true
 
 #### Source:
 
@@ -34,10 +36,9 @@ export const findLastIndex = <T>(
 };
 
 export default findLastIndex;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("findLastIndex()", () => {
@@ -50,5 +51,3 @@ Rhum.testSuite("findLastIndex()", () => {
   });
 });
 ```
-
-  

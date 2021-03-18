@@ -3,7 +3,7 @@ import randomOf from "./utils/randomOf.ts";
 
 import comparatorChain from "./utils/comparatorChain.ts";
 import delay from "./utils/delay.ts";
-import identity from './utils/identity.ts';
+import identity from "./utils/identity.ts";
 
 Rhum.testPlan("utils/*", () => {
   Rhum.testSuite("comparatorChain()", () => {
@@ -27,8 +27,8 @@ Rhum.testPlan("utils/*", () => {
         testArr.sort(
           comparatorChain(
             (a: NameAge, b: NameAge) => a.age - b.age,
-            (a: NameAge, b: NameAge) => a.name.localeCompare(b.name)
-          )
+            (a: NameAge, b: NameAge) => a.name.localeCompare(b.name),
+          ),
         ),
         [
           {
@@ -43,7 +43,7 @@ Rhum.testPlan("utils/*", () => {
             age: 25,
             name: "carl",
           },
-        ]
+        ],
       );
     });
   });
@@ -62,7 +62,6 @@ Rhum.testPlan("utils/*", () => {
       Rhum.asserts.assertStrictEquals(count, 10);
       await delay(30);
       Rhum.asserts.assertStrictEquals(count, 20);
-
     });
   });
   Rhum.testSuite("randomOf()", () => {
@@ -80,8 +79,10 @@ Rhum.testPlan("utils/*", () => {
       Rhum.asserts.assertStrictEquals(identity("foo"), "foo");
       const referenceToArray = [1, 2, 3];
       Rhum.asserts.assertEquals(identity(referenceToArray), referenceToArray);
-      Rhum.asserts.assertStrictEquals(identity(referenceToArray), referenceToArray);
-
+      Rhum.asserts.assertStrictEquals(
+        identity(referenceToArray),
+        referenceToArray,
+      );
     });
   });
 });
