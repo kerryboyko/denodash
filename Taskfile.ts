@@ -5,12 +5,9 @@ Windows PowerShell: Set-Alias -Name deno-task -Value deno run --allow-run ./Task
 
 Thanks to https://dev.to/vonheikemen/a-simple-way-to-replace-npm-scripts-in-deno-4j0g for this idea.
 */
-type DenoTask = (...args: any[]) => Promise<Deno.ProcessStatus>
+type DenoTask = (...args: any[]) => Promise<Deno.ProcessStatus>;
 
-function run(
-  [name, ...args]: string[],
-  tasks: Record<string, DenoTask>
-): void {
+function run([name, ...args]: string[], tasks: Record<string, DenoTask>): void {
   if (tasks[name]) {
     tasks[name](...args);
   } else {
@@ -32,8 +29,10 @@ run(Deno.args, {
   test: () => exec(`deno test --allow-env`.split(" ")),
   docs: () =>
     exec(
-      `deno run --allow-read --allow-write documentation/createDocumentation.ts`.split(
-        " "
-      )
+      `deno run --allow-read --allow-write documentation/createDocumentation.ts`
+        .split(
+          " ",
+        ),
     ),
+  fmt: () => exec(`deno fmt`.split(" ")),
 });

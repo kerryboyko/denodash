@@ -7,7 +7,10 @@ export const throttle = (
   func: Function,
   wait = 0,
   options: ThrottleOptions = { leading: true, trailing: true },
-) => {
+): {
+  (...args: any[]): any;
+  cancel(): void;
+} => {
   let timeout: ReturnType<typeof setTimeout>;
   let result: any;
   let args: any[] = [];

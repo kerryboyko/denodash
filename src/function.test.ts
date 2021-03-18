@@ -32,17 +32,19 @@ Rhum.testPlan("function/*", async () => {
     Rhum.testCase(
       "should invoke provided function only when before N times",
       () => {
-        const log: any[] = [];
-        const logger = (x: any) => {
-          log.push(x);
+        let count = 0;
+        const incrementAndReturn = () => {
+          count += 1;
+          return count;
         };
-        const logAfterThree = after(3, logger);
-        for (let i = 0; i < 10; i++) {
-          logAfterThree(i);
-        }
-        Rhum.asserts.assertStrictEquals(log.indexOf(0), -1);
-        Rhum.asserts.assertStrictEquals(log.indexOf(1), -1);
-        Rhum.asserts.assertEquals(log, [2, 3, 4, 5, 6, 7, 8, 9]);
+
+        const beforeThree = before(3, incrementAndReturn);
+
+        Rhum.asserts.assertStrictEquals(beforeThree(), 1);
+        Rhum.asserts.assertStrictEquals(beforeThree(), 2);
+        Rhum.asserts.assertStrictEquals(beforeThree(), 3);
+        Rhum.asserts.assertStrictEquals(beforeThree(), 3);
+        Rhum.asserts.assertStrictEquals(beforeThree(), 3);
       },
     );
   });

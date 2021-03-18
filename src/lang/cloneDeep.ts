@@ -1,4 +1,4 @@
-const cloneDeep = (value: any): any => {
+const cloneDeep = (value: any): any | never => {
   const typeofValue = typeof value;
   // primatives are copied by value.
   if (
