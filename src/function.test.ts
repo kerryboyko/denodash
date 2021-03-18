@@ -40,6 +40,8 @@ Rhum.testPlan("function/*", async () => {
         for (let i = 0; i < 10; i++) {
           logAfterThree(i);
         }
+        Rhum.asserts.assertStrictEquals(log.indexOf(0), -1);
+        Rhum.asserts.assertStrictEquals(log.indexOf(1), -1);
         Rhum.asserts.assertEquals(log, [2, 3, 4, 5, 6, 7, 8, 9]);
       },
     );

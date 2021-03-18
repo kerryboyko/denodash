@@ -290,6 +290,27 @@ const collectionDocObjects = [
   signature: `${cdo.name} = ${cdo.signature}`,
 }));
 
-const docObjects = [...arrayDocObjects, ...collectionDocObjects];
+const functionDocObjects = [
+  {
+    name: "after",
+    signature: `(
+      n: number,
+      fn: Function
+    ): ((...args: any) => any | void)`,
+    description:
+      `Invokes the provided function *only* after it has been called n times (inclusive). In other words, if n is 3, it will not be called on the first or second invocation, but will be called on the third.`,
+  },
+].map((fdo) => ({
+  ...fdo,
+  testFile: "src/function.test.ts",
+  sourceFile: `src/function/${fdo.name}.ts`,
+  signature: `${fdo.name} = ${fdo.signature}`,
+}));
+
+const docObjects = [
+  ...arrayDocObjects,
+  ...collectionDocObjects,
+  ...functionDocObjects,
+];
 
 export default docObjects;
