@@ -1,5 +1,10 @@
 import type { DocObject } from "./documentationObjects.ts";
 
+<<<<<<< Updated upstream
+=======
+const VERSION = `0.1.4`;
+
+>>>>>>> Stashed changes
 const justParens = (line: string): number => {
   const openCount = (line.match(/\(/g) || []).length;
   const closeCount = (line.match(/\)/g) || []).length;
