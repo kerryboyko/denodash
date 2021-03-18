@@ -18,7 +18,7 @@ function run(
   }
 }
 
-async function exec(args: string[]) {
+async function exec(args: string[]): Promise<Deno.ProcessStatus> {
   const proc = await Deno.run({ cmd: args }).status();
 
   if (proc.success == false) {
