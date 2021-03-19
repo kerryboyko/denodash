@@ -4,6 +4,7 @@ export type MonadType<T> = {
   chain: (fn: (v: T) => T) => T;
   ap: (anotherMonad: MonadType<T>) => MonadType<T>;
   value: () => T;
+  isNothing?: boolean;
 };
 
 export const Monad = <T>(val: T): MonadType<T> => {

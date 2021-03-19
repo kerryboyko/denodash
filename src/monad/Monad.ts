@@ -2,22 +2,25 @@ export type MonadType<T> = {
   map: (fn: (v: T) => T) => MonadType<any>;
   tap: (fn: (v: T) => void) => MonadType<any>;
   chain: (fn: (v: T) => T) => T;
-  ap: (anotherMonad: MonadType<any>) => MonadType<any>;
+  ap: (anotherMonad: MonadType<T>) => MonadType<T>;
   value: () => T;
+  isNothing?: boolean;
 };
 
-export const monad = (val: T): MonadType<T> => {
+export const Monad = <T>(val: T): MonadType<T> => {
   let _val: T = val;
   return {
-    map: (fn) => monad(fn(_val)),
+    map: (fn) => Monad(fn(_val)),
     tap: (fn) => {
       fn(_val);
-      return monad(_val);
+      return Monad(_val);
     },
     chain: (fn) => fn(_val),
-    ap: (anotherMonad) => anotherMonad.map(_val),
+    ap: (anotherMonad) => anotherMonad.map(() => _val),
     value: () => _val,
   };
 };
 
-export default monad;
+export const Identity = Monad;
+
+export default Monad;
