@@ -1,18 +1,20 @@
 import Maybe from "./Maybe.ts";
 import type { MaybeType } from "./Maybe.ts";
-import { ObjectKey } from "../../documentation/types/ObjectKey.d.ts";
+import { ObjectKey } from "../types/ObjectKey.d.ts";
 
 export type TraverseType<T> = MaybeType<T> & {
   traverse?: (prop: ObjectKey) => TraverseType<any>;
 };
 
-const Traverse = (val: any, ...backupValues: any): TraverseType<any> => {
-  const monadVal = Maybe(val);
-  if (monadVal.hasOwnProperty('isNothing') && monadVal.isNothing === true) {
+export const Traverse = (val: any, ...backupValues: any): TraverseType<any> => {
+  const _val: TraverseType<any> = Maybe(val);
+  _val.traverse = (prop: ObjectKey): TraverseType<any> => {
+    return _val.map((v: any) => v[prop]);
+  };
+  if (_val.hasOwnProperty('isNothing') && _val.isNothing === true) {
     return Traverse(backupValues[0], ...backupValues.slice(1));
   }
-  const traverse = (prop: string | number | symbol): TraverseType<any> => {
-    return monadVal.map((v: any) => v[prop]);
-  };
-
+  return _val
 };
+
+export default Traverse;
