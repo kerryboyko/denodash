@@ -1,10 +1,8 @@
-import type { MonadType } from "./Monad.ts";
+import type {MonadType, MaybeType} from '../types/Monads.d.ts'
+
 import Nothing from "./Nothing.ts";
-import type { NothingType } from "./Nothing.ts";
 
-export type MaybeType<T> = MonadType<T> | NothingType
-
-const Maybe = <T>(val: T): MonadType<T> | NothingType => {
+const Maybe = <T>(val: T): MaybeType<T> => {
   let _val = val;
   const Something: MonadType<T> = {
     map: (fn) => Maybe(fn(_val)),

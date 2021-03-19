@@ -1,11 +1,4 @@
-export type MonadType<T> = {
-  map: (fn: (v: T) => T) => MonadType<any>;
-  tap: (fn: (v: T) => void) => MonadType<any>;
-  chain: (fn: (v: T) => T) => T;
-  ap: (anotherMonad: MonadType<T>) => MonadType<T>;
-  value: () => T;
-  isNothing?: boolean;
-};
+import type { MonadType } from "../types/Monads.d.ts";
 
 export const Monad = <T>(val: T): MonadType<T> => {
   let _val: T = val;

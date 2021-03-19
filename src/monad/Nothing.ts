@@ -1,14 +1,4 @@
-import type { MonadType } from "./Monad.ts";
-
-export interface NothingType extends MonadType<any> {
-  map: (fn: (v: T) => T) => NothingType;
-  tap: (fn: (v: T) => void) => NothingType;
-  chain: (fn: (v: T) => T) => NothingType;
-  value: () => never;
-  inspect: () => `Nothing()`;
-  ap: (anotherMonad: MonadType<any>) => MonadType<any>;
-  isNothing: true;
-}
+import type { NothingType } from "../types/Monads.d.ts";
 
 export const Nothing = (): NothingType => ({
   map: (_fn) => Nothing(),
