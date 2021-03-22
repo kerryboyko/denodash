@@ -1,24 +1,20 @@
-import type {MonadType, MaybeType} from '../types/Monads.d.ts'
-
+import type { MaybeType, MonadType } from "../types/Monads.d.ts";
+import Monad from "./Monad.ts";
 import Nothing from "./Nothing.ts";
 
-const Maybe = <T>(val: T): MaybeType<T> => {
-  let _val = val;
-  const Something: MonadType<T> = {
-    map: (fn) => Maybe(fn(_val)),
-    tap: (fn) => {
-      fn(_val);
-      return Maybe(_val);
-    },
-    chain: (fn) => fn(_val),
-    ap: (anotherMonad) => anotherMonad.map(() => _val),
-    value: () => _val,
-    isNothing: false
-  };
-  if (typeof _val === "undefined" || _val === null) {
+const Maybe = (val: any): MaybeType<any> => {
+  if (typeof val === "undefined" || val === null) {
     return Nothing();
   }
-  return Something;
+
+  return Monad(val)
+    .define("isNothing", false)
+    .patch("inspect", () => `Something(${val}) as Maybe(${val})`)
+    .patch("map", (fn) => Maybe(fn(val)))
+    .patch("tap", (fn) => {
+      fn(val);
+      return Maybe(val);
+    });
 };
 
 export default Maybe;

@@ -2,20 +2,23 @@ import type { ObjectKey } from "./ObjectKey.d.ts";
 
 export type MonadType<T> = {
   map: (fn: (v: T) => T) => MonadType<any>;
-  tap: (fn: (v: T) => void) => MonadType<any>;
+  tap: (fn: (v: T) => T) => MonadType<any>;
   chain: (fn: (v: T) => T) => T;
-  ap: (anotherMonad: MonadType<T>) => MonadType<T>;
+  ap: <U>(anotherMonad: MonadType<U>) => MonadType<U>;
   value: () => T;
   isNothing?: boolean;
+  inspect: () => string;
+  patch: (methodName: string, fn: (v: T) => any) => MonadType<T>;
+  define: (propertyName: string, propertyValue: any) => MonadType<T>;
+  [key: string]: any;
 };
 
 export interface NothingType extends MonadType<any> {
-  map: (fn: (v: T) => T) => NothingType;
-  tap: (fn: (v: T) => void) => NothingType;
-  chain: (fn: (v: T) => T) => NothingType;
+  map: () => NothingType;
+  tap: () => NothingType;
+  chain: () => never;
   value: () => never;
-  inspect: () => `Nothing()`;
-  ap: (anotherMonad: MonadType<any>) => MonadType<any>;
+  inspect: () => string;
   isNothing: true;
 }
 

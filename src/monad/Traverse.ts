@@ -3,14 +3,17 @@ import { ObjectKey } from "../types/ObjectKey.d.ts";
 import type { TraverseType } from "../types/Monads.d.ts";
 
 const Traverse = (val: any, ...backupValues: any): TraverseType<any> => {
-  const _val: TraverseType<any> = Maybe(val);
-  _val.traverse = (prop: ObjectKey): TraverseType<any> => {
-    return _val.map((v: any) => v[prop]);
-  };
-  if (_val.hasOwnProperty('isNothing') && _val.isNothing === true) {
+  const traverser: TraverseType<any> = Maybe(val);
+  if (traverser.hasOwnProperty("isNothing") && traverser.isNothing === true) {
     return Traverse(backupValues[0], ...backupValues.slice(1));
   }
-  return _val
+  traverser.patch(
+    "traverse",
+    (prop: ObjectKey): TraverseType<any> => {
+      return traverser.map((v: any) => v[prop]);
+    },
+  );
+  return traverser;
 };
 
-export default Traverse
+export default Traverse;
