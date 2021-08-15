@@ -1,6 +1,7 @@
 import type { DocObject } from "./documentationObjects.ts";
 
-const VERSION = `0.1.2`;
+const VERSION = await Deno.readTextFile("./VERSION.txt");
+console.info(`VERSION ${VERSION}`);
 
 const justParens = (line: string): number => {
   const openCount = (line.match(/\(/g) || []).length;

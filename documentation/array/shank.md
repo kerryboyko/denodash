@@ -1,12 +1,13 @@
-
 ## shank
 
 #### import
+
 ```typescript
-import shank from "https://deno.land/x/denodash@0.1.2/src/array/shank.ts"
+import shank from "https://deno.land/x/denodash@0.1.3/src/array/shank.ts";
 ```
 
 #### signature
+
 ```typescript
 shank = <T>(
       arr: T[],
@@ -16,8 +17,9 @@ shank = <T>(
     ): T[]
 ```
 
-Works exactly like [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice), but returns a new array,
-    rather than mutating the original.
+Works exactly like
+[Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice),
+but returns a new array, rather than mutating the original.
 
 #### Source:
 
@@ -34,10 +36,9 @@ export const shank = <T>(
     .concat(arr.slice(index + delCount));
 
 export default shank;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("shank", () => {
@@ -59,5 +60,3 @@ Rhum.testSuite("shank", () => {
   );
 });
 ```
-
-  

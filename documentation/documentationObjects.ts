@@ -283,6 +283,15 @@ const collectionDocObjects = [
     description:
       `Returns a copy of the array provided, sorted by the criteria provided (comparators). Comparators are prioritized from first to last.`,
   },
+  {
+    name: "sortByProperty",
+    signature: `<T extends { [key: string]: any }>(
+      array: T[],
+      property: string,
+    ): T[] | never`,
+    description:
+      `Returns a copy of the array provided, sorted by the value of a key provided`,
+  },
 ].map((cdo) => ({
   ...cdo,
   testFile: "src/collection.test.ts",

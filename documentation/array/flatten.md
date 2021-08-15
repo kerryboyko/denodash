@@ -1,12 +1,13 @@
-
 ## flatten
 
 #### import
+
 ```typescript
-import flatten from "https://deno.land/x/denodash@0.1.2/src/array/flatten.ts"
+import flatten from "https://deno.land/x/denodash@0.1.3/src/array/flatten.ts";
 ```
 
 #### signature
+
 ```typescript
 flatten = (arr: any[]): any[]
 ```
@@ -21,10 +22,9 @@ import flattenDepth from "./flattenDepth.ts";
 export const flatten = (arr: any[]): any[] => flattenDepth(arr, 1);
 
 export default flatten;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("flatten()", () => {
@@ -34,5 +34,3 @@ Rhum.testSuite("flatten()", () => {
   });
 });
 ```
-
-  

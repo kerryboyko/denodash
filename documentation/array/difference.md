@@ -1,17 +1,19 @@
-
 ## difference
 
 #### import
+
 ```typescript
-import difference from "https://deno.land/x/denodash@0.1.2/src/array/difference.ts"
+import difference from "https://deno.land/x/denodash@0.1.3/src/array/difference.ts";
 ```
 
 #### signature
+
 ```typescript
 difference = <T>(a: T[], b: T[]): T[]
 ```
 
-Takes two arrays (a, b) and returns an array of elements in a that do not exist in b
+Takes two arrays (a, b) and returns an array of elements in a that do not exist
+in b
 
 #### Source:
 
@@ -23,10 +25,9 @@ export const difference = <T>(a: T[], b: T[]): T[] =>
   differenceBy(identity, a, b);
 
 export default difference;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("difference()", () => {
@@ -37,5 +38,3 @@ Rhum.testSuite("difference()", () => {
   });
 });
 ```
-
-  

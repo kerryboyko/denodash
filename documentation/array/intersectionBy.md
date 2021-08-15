@@ -1,17 +1,20 @@
-
 ## intersectionBy
 
 #### import
+
 ```typescript
-import intersectionBy from "https://deno.land/x/denodash@0.1.2/src/array/intersectionBy.ts"
+import intersectionBy from "https://deno.land/x/denodash@0.1.3/src/array/intersectionBy.ts";
 ```
 
 #### signature
+
 ```typescript
 intersectionBy = <T>(fn: Iteratee<T, any>, ...arrays: T[][]): T[]
 ```
 
-Takes any number of arrays and returns every element in the first array where iteratee(elementOfFirst) has the same value as iteratee(oneOfTheElementsOfTheOtherArray/s)
+Takes any number of arrays and returns every element in the first array where
+iteratee(elementOfFirst) has the same value as
+iteratee(oneOfTheElementsOfTheOtherArray/s)
 
 #### Source:
 
@@ -36,10 +39,9 @@ const intersectionBy = <T>(fn: Iteratee<T, any>, ...arrays: T[][]): T[] => {
 };
 
 export default intersectionBy;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("intersectionBy()", () => {
@@ -65,5 +67,3 @@ Rhum.testSuite("intersectionBy()", () => {
   );
 });
 ```
-
-  
