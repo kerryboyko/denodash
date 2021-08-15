@@ -1,12 +1,13 @@
-
 ## flattenDeep
 
 #### import
+
 ```typescript
-import flattenDeep from "https://deno.land/x/denodash@0.1.2/src/array/flattenDeep.ts"
+import flattenDeep from "https://deno.land/x/denodash@0.1.3/src/array/flattenDeep.ts";
 ```
 
 #### signature
+
 ```typescript
 flattenDeep = (arr: any[]): any[]
 ```
@@ -22,10 +23,9 @@ export const flattenDeep = (arr: any[]) =>
   flattenDepth(arr, Number.MAX_SAFE_INTEGER);
 
 export default flattenDeep;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("flattenDeep()", () => {
@@ -35,5 +35,3 @@ Rhum.testSuite("flattenDeep()", () => {
   });
 });
 ```
-
-  

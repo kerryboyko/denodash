@@ -1,17 +1,19 @@
-
 ## xor
 
 #### import
+
 ```typescript
-import xor from "https://deno.land/x/denodash@0.1.2/src/array/xor.ts"
+import xor from "https://deno.land/x/denodash@0.1.3/src/array/xor.ts";
 ```
 
 #### signature
+
 ```typescript
 xor = (...arrays: any[][]): any[]
 ```
 
-Creates an array of elements where the element appears in one and only one of the arrays
+Creates an array of elements where the element appears in one and only one of
+the arrays
 
 #### Source:
 
@@ -26,10 +28,9 @@ export const xor = (...arrays: any[][]): any[] => {
 };
 
 export default xor;
-
 ```
 
-#### Test Examples: 
+#### Test Examples:
 
 ```typescript
 Rhum.testSuite("xor()", () => {
@@ -38,5 +39,3 @@ Rhum.testSuite("xor()", () => {
   });
 });
 ```
-
-  

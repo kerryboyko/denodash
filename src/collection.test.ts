@@ -8,6 +8,7 @@ import flatMapDepth from "./collection/flatMapDepth.ts";
 import groupBy from "./collection/groupBy.ts";
 import keyBy from "./collection/keyBy.ts";
 import sortBy from "./collection/sortBy.ts";
+import sortByProperty from "./collection/sortByProperty.ts";
 import shuffle from "./collection/shuffle.ts";
 import sample from "./collection/sample.ts";
 import sampleOne from "./collection/sampleOne.ts";
@@ -74,13 +75,10 @@ Rhum.testPlan("collection/*", () => {
           "6": [6.1, 6.3],
         });
         Rhum.asserts.assertEquals(
-          groupBy((n: number): string => (n % 2 === 0 ? "even" : "odd"), [
-            1,
-            2,
-            3,
-            4,
-            5,
-          ]),
+          groupBy(
+            (n: number): string => (n % 2 === 0 ? "even" : "odd"),
+            [1, 2, 3, 4, 5],
+          ),
           {
             even: [2, 4],
             odd: [1, 3, 5],
@@ -152,6 +150,32 @@ Rhum.testPlan("collection/*", () => {
             { user: "fred", age: 40 },
           ],
         );
+      },
+    );
+  });
+  Rhum.testSuite("sortByProperty()", () => {
+    Rhum.testCase(
+      "sorts the order of the iteratees by a string provided",
+      () => {
+        type TestType = { user: string; age: number };
+        const testArray: TestType[] = [
+          { user: "fred", age: 48 },
+          { user: "barney", age: 34 },
+          { user: "fred", age: 40 },
+          { user: "barney", age: 36 },
+        ];
+        Rhum.asserts.assertEquals(sortByProperty(testArray, "age"), [
+          { user: "barney", age: 34 },
+          { user: "barney", age: 36 },
+          { user: "fred", age: 40 },
+          { user: "fred", age: 48 },
+        ]);
+        Rhum.asserts.assertEquals(sortByProperty(testArray, "user"), [
+          { user: "barney", age: 34 },
+          { user: "barney", age: 36 },
+          { user: "fred", age: 48 },
+          { user: "fred", age: 40 },
+        ]);
       },
     );
   });

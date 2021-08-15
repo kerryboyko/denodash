@@ -2,6 +2,38 @@
 
 ## A Typescript-First utility library for Deno
 
+## Getting Started
+
+### Taskfile
+
+To use Taskfile, it's recommended that you alias this to your shell:
+
+```bash
+alias deno-task='deno run --allow-run $(git rev-parse --show-toplevel)/Taskfile.ts'
+```
+
+Or for Windows PowerShell:
+
+```powershell
+Set-Alias -Name deno-task -Value deno run --allow-run ./Taskfile.ts
+```
+
+Then you will be able to execute the following from the command line:
+
+- `deno-task docs` -- generates documentation.
+- `deno-task fmt` -- formats the files.
+- `deno-task test` -- runs the test suite.
+
+Thanks to
+[https://dev.to/vonheikemen/a-simple-way-to-replace-npm-scripts-in-deno-4j0g](https://dev.to/vonheikemen/a-simple-way-to-replace-npm-scripts-in-deno-4j0g)
+for this idea.
+
+### Using in your library
+
+Just import from deno.land, we'll take care of the rest :)
+
+Current version is "https://deno.land/x/denodash@0.1.3/"
+
 ### Why yet another utility library?
 
 I'll be honest, I _love_ Lodash in my node projects. Even though I could
@@ -12,7 +44,7 @@ especially when going from Node to Deno.
 Lodash was designed in a EMCA 3 kind of world, where things such as "filter" and
 "slice" were not yet part of the official Javascript prototype. Moving forward,
 there are a lot of utilities that a utility library can omit. Do we really need
-_.last when we can just write arr[arr.length - 1]? Or _.compact when we can just
+_.last when we can just write arr[arr.length - 1]? Or_.compact when we can just
 write arr.filter(x => !!x)?
 
 Instead of importing Lodash into the new Deno ecosystem, I thought it was a good
@@ -69,7 +101,7 @@ intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.2]);
 At one point I considered using currying, but as this is a utility library, the
 inefficiency of closures in V8 makes a simple function the way to go for now.
 
-## Current High Priority Needs:
+## Current High Priority Needs
 
 ### Debounce & Throttle
 
@@ -77,9 +109,9 @@ It can be difficult to test Debounce and Throttle, and I'm not 100% sure I got
 the implementation right. I'd like another pair of eyes on it if it's possible,
 and some more tests.
 
-## Methods:
+## Methods
 
-### Currently Supported:
+### Currently Supported
 
 - array
   - cartesianProduct
